@@ -1,0 +1,22 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.name {
+    text-decoration: none;
+    color: #fff;
+    margin: 20px;
+    font-size: 25px;
+}
+
+.name_active {
+    text-decoration: none;
+    color: gold;
+    margin: 20px;
+    font-size: 25px;
+}
+
+.message-items {
+    padding: 10px;
+}
