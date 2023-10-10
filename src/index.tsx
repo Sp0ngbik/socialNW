@@ -2,16 +2,17 @@ import './index.css';
 import React from "react";
 import ReactDOM from "react-dom/client";
 // import {addPost, onChangePostValue, state, subscribe, T_StateObject} from "./redux/state";
-import {store} from "./redux/state";
+import {store, T_StateObject} from "./redux/state";
 import App from "./App";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-const rerenderEntireThree = (state: any) => {
+const rerenderEntireThree = (state: T_StateObject) => {
     root.render(
         <React.StrictMode>
-            <App store={store}/>
+            <App state={state} addPost={store.addPost.bind(store)}
+                 onChangePostValue={store.onChangePostValue.bind(store)}/>
         </React.StrictMode>
     );
 }

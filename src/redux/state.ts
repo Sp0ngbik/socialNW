@@ -31,17 +31,12 @@ export type T_StateObject = {
 export type T_StoreObject = {
     _state: T_StateObject,
     getState: () => T_StateObject,
-    getSideBar: () => { friends: T_Friend[] }
-    getDialogPage: () => {
-        dialogsData: T_UserDialog[],
-        messageData: T_Message[],
-    }
     addPost: () => void,
     onChangePostValue: (value: string) => void,
     subscribe: (observer: (store: T_StateObject) => void) => void
-
+    _callSubscriber: (state: T_StateObject) => void
 }
-export const store = {
+export const store: T_StoreObject = {
     _state: {
         dialogPage: {
             dialogsData: [
@@ -84,31 +79,25 @@ export const store = {
     getState() {
         return this._state
     },
-    getSideBar() {
-        return this._state.sidebar
-    },
-    getDialogPage() {
-        return this._state.dialogPage
-    },
     addPost() {
         let newPost = {
-            id: store._state.profilePage.posts.length + 1,
-            message: store._state.profilePage.newTextForPost,
+            id: this._state.profilePage.posts.length + 1,
+            message: this._state.profilePage.newTextForPost,
             likesCount: 0
-        }
-        store._state.profilePage.posts.push(newPost)
-        store.rerenderEntireThree(store._state)
-        store._state.profilePage.newTextForPost = ''
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._callSubscriber(this._state);
+        this._state.profilePage.newTextForPost = '';
     },
     onChangePostValue(value: string) {
-        store._state.profilePage.newTextForPost = value
-        store.rerenderEntireThree(store._state)
+        this._state.profilePage.newTextForPost = value
+        this._callSubscriber(this._state)
     },
-    rerenderEntireThree(state: T_StateObject) {
+    _callSubscriber(state: T_StateObject) {
         console.log('state changed')
     },
     subscribe(observer: (store: T_StateObject) => void) {
-        store.rerenderEntireThree = observer
+        this._callSubscriber = observer
     }
 }
 

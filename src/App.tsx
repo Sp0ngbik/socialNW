@@ -6,27 +6,29 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
-import {T_StoreObject} from "./redux/state";
+import {T_StateObject} from "./redux/state";
 
 
 type T_AppType = {
-    store: T_StoreObject;
+    state: T_StateObject;
+    addPost: () => void,
+    onChangePostValue: (value: string) => void
 }
-const App: FC<T_AppType> = ({store}) => {
+const App: FC<T_AppType> = ({state, addPost, onChangePostValue}) => {
     return (
         <div className='app-wrapper'>
             <BrowserRouter>
                 <Header/>
-                <Navbar friends={store.getSideBar().friends}/>
+                <Navbar friends={state.sidebar.friends}/>
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path={'/*'} element={<News/>}/>
                         <Route path={'/profile'}
-                               element={<Profile profilePage={store.getState().profilePage}
-                                                 onChangePostValue={store.onChangePostValue}
-                                                 addPost={store.addPost}/>}/>
+                               element={<Profile profilePage={state.profilePage}
+                                                 onChangePostValue={onChangePostValue}
+                                                 addPost={addPost}/>}/>
                         <Route path={'/dialogs/*'}
-                               element={<Dialogs dialogPage={store.getDialogPage()}
+                               element={<Dialogs dialogPage={state.dialogPage}
                                />}/>
                     </Routes>
                 </div>
