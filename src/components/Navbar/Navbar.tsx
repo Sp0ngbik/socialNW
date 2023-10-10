@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
+import {T_Friend} from "../../redux/state";
 
-const Navbar = () => {
+type T_NavaBarPage = {
+    friends: T_Friend[]
+}
+
+const Navbar: FC<T_NavaBarPage> = ({friends}) => {
     return <nav className={s.nav}>
         <div className={s.item}>
             <NavLink className={({isActive}) => isActive ? s.active : ''} to={'/profile'}>Profile</NavLink>
@@ -18,6 +23,14 @@ const Navbar = () => {
         </div>
         <div className={s.item}>
             <NavLink className={({isActive}) => isActive ? s.active : ''} to={"/setting"}>Settings</NavLink>
+        </div>
+        <div className={s.friendsBlock}>
+            <h2 >Friends block</h2>
+            <div className={s.friendInfo}>
+                {friends.map((el) => {
+                    return <img  key={el.id} alt={'user ava not found'} src={el.imageSrc}/>
+                })}
+            </div>
         </div>
     </nav>
 }

@@ -1,24 +1,42 @@
-import React from 'react';
+import React, {FC, RefObject, useRef} from 'react';
 import s from './MyPosts.module.css';
-import Post from './Post/Post';
+import {T_PostData} from "../../../redux/state";
+import Post from "./Post/Post";
 
-type T_PostData = {
-    id: number, message: string, likesCount: number
+type T_MyPosts = {
+    profilePage: {
+        newTextForPost: string,
+        posts: T_PostData[]
+    }
+    onChangePostValue: (value: string) => void
+    addPost: () => void
 }
-const MyPosts = () => {
-    let postData: T_PostData[] = [
-        {id: 1, message: 'Hello,fellow', likesCount: 3},
-        {id: 2, message: 'Welcome bro', likesCount: 5},
-    ]
+
+
+const MyPosts: FC<T_MyPosts> = ({profilePage, addPost, onChangePostValue}) => {
+    const newPostTitle: RefObject<HTMLTextAreaElement> = useRef(null)
+    const addPostFunc = () => {
+        if (newPostTitle.current) {
+            addPost()
+        }
+    }
+    const onPostChange = () => {
+        newPostTitle.current && onChangePostValue(newPostTitle.current?.value)
+    }
+
     return (
         <div>
             My posts
             <div>
-                <textarea></textarea>
-                <button>Add post</button>
+                <textarea
+                    value={profilePage.newTextForPost}
+                    onChange={onPostChange}
+                    ref={newPostTitle}/>
+                <button onClick={addPostFunc}>Add post
+                </button>
             </div>
             <div className={s.posts}>
-                {postData.map(el => <Post message={el.message} likesCount={el.likesCount}/>)}
+                {profilePage.posts.map(el => <Post key={el.id} message={el.message} likesCount={el.likesCount}/>)}
             </div>
         </div>
     )

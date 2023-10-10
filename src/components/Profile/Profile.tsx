@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './Profile.module.css';
-import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {T_PostData} from "../../redux/state";
+import MyPosts from "./MyPosts/MyPosts";
 
-const Profile = () => {
+type T_ProfilePage = {
+    profilePage: {
+        newTextForPost: string,
+        posts: T_PostData[]
+    }
+    onChangePostValue: (value: string) => void
+    addPost: () => void
+}
+const Profile: FC<T_ProfilePage> = ({profilePage, addPost, onChangePostValue}) => {
     return (
         <div className={s.content}>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts addPost={addPost} onChangePostValue={onChangePostValue} profilePage={profilePage}/>
         </div>
     )
 }

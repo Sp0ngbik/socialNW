@@ -11,3 +11,25 @@
 .item .active {
     color: gold;
 }
+
+.friendsBlock {
+
+    align-items: center;
+    width: 80%;
+}
+
+.friendsBlock img {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.friendInfo {
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    justify-items: center;
+}
