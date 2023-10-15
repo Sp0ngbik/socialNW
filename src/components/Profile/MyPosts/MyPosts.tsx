@@ -1,27 +1,30 @@
 import React, {FC, RefObject, useRef} from 'react';
 import s from './MyPosts.module.css';
-import {T_PostData} from "../../../redux/state";
+import {addPostAC, onChangePostAC, T_MainActionType, T_PostData} from "../../../redux/state";
 import Post from "./Post/Post";
+
+
 
 type T_MyPosts = {
     profilePage: {
         newTextForPost: string,
         posts: T_PostData[]
     }
-    onChangePostValue: (value: string) => void
-    addPost: () => void
+    dispatch: (action: T_MainActionType) => void
 }
 
 
-const MyPosts: FC<T_MyPosts> = ({profilePage, addPost, onChangePostValue}) => {
+const MyPosts: FC<T_MyPosts> = ({profilePage, dispatch}) => {
     const newPostTitle: RefObject<HTMLTextAreaElement> = useRef(null)
     const addPostFunc = () => {
         if (newPostTitle.current) {
-            addPost()
+            // addPost()
+            dispatch(addPostAC())
         }
     }
     const onPostChange = () => {
-        newPostTitle.current && onChangePostValue(newPostTitle.current?.value)
+        // newPostTitle.current && onChangePostValue(newPostTitle.current?.value)
+        newPostTitle.current && dispatch(onChangePostAC(newPostTitle.current.value))
     }
 
     return (

@@ -6,15 +6,16 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
-import {T_StateObject} from "./redux/state";
+import {T_MainActionType, T_StateObject} from "./redux/state";
 
 
 type T_AppType = {
     state: T_StateObject;
-    addPost: () => void,
-    onChangePostValue: (value: string) => void
+    // addPost: () => void,
+    // onChangePostValue: (value: string) => void
+    dispatch: (action: T_MainActionType) => void
 }
-const App: FC<T_AppType> = ({state, addPost, onChangePostValue}) => {
+const App: FC<T_AppType> = ({state, dispatch}) => {
     return (
         <div className='app-wrapper'>
             <BrowserRouter>
@@ -25,10 +26,11 @@ const App: FC<T_AppType> = ({state, addPost, onChangePostValue}) => {
                         <Route path={'/*'} element={<News/>}/>
                         <Route path={'/profile'}
                                element={<Profile profilePage={state.profilePage}
-                                                 onChangePostValue={onChangePostValue}
-                                                 addPost={addPost}/>}/>
+                                                 dispatch={dispatch}
+                               />}/>
                         <Route path={'/dialogs/*'}
                                element={<Dialogs dialogPage={state.dialogPage}
+                                                 dispatch={dispatch}
                                />}/>
                     </Routes>
                 </div>
