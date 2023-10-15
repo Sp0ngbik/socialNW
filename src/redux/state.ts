@@ -1,3 +1,7 @@
+import {profileReducer} from "./reducers/profileReducer";
+import {dialogReducer} from "./reducers/dialogReducer";
+import {sideBarReducer} from "./reducers/sideBarReducer";
+
 export type T_UserDialog = {
     name: string,
     id: number
@@ -124,42 +128,42 @@ export const store: T_StoreObject = {
     //     this._callSubscriber(this._state)
     // },
     dispatch(action) {
-        if (action.type === 'ADD_POST') {
-            let newPost = {
-                id: this._state.profilePage.posts.length + 1,
-                message: this._state.profilePage.newTextForPost,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._callSubscriber(this._state);
-            this._state.profilePage.newTextForPost = '';
-        } else if (
-            action.type === 'CHANGE_POST_VALUE'
-        ) {
-            this._state.profilePage.newTextForPost = action.text
-            this._callSubscriber(this._state)
-        } else if (action.type === 'ADD_NEW_MESSAGE') {
-            let newMessage = {
-                id: this._state.dialogPage.messageData.length + 1,
-                message: this._state.dialogPage.newMessageTitle
-            }
-            this._state.dialogPage.messageData.push(newMessage)
-            this._callSubscriber(this._state);
-            this._state.dialogPage.newMessageTitle = ''
-        } else if (action.type === 'CHANGE_NEW_TITLE_MESSAGE') {
-            this._state.dialogPage.newMessageTitle = action.text
-
-            this._callSubscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogPage = dialogReducer(this._state.dialogPage, action)
+        this._state.sidebar = sideBarReducer(this._state.sidebar, action)
+        this._callSubscriber(this._state);
+        // if (action.type === 'ADD_POST') {
+        //     let newPost = {
+        //         id: this._state.profilePage.posts.length + 1,
+        //         message: this._state.profilePage.newTextForPost,
+        //         likesCount: 0
+        //     };
+        //     this._state.profilePage.posts.push(newPost);
+        //     this._callSubscriber(this._state);
+        //     this._state.profilePage.newTextForPost = '';
+        // } else if (
+        //     action.type === 'CHANGE_POST_VALUE'
+        // ) {
+        //     this._state.profilePage.newTextForPost = action.text
+        //     this._callSubscriber(this._state)
+        // } else if (action.type === 'ADD_NEW_MESSAGE') {
+        //     let newMessage = {
+        //         id: this._state.dialogPage.messageData.length + 1,
+        //         message: this._state.dialogPage.newMessageTitle
+        //     }
+        //     this._state.dialogPage.messageData.push(newMessage)
+        //     this._callSubscriber(this._state);
+        //     this._state.dialogPage.newMessageTitle = ''
+        // } else if (action.type === 'CHANGE_NEW_TITLE_MESSAGE') {
+        //     this._state.dialogPage.newMessageTitle = action.text
+        //
+        //     this._callSubscriber(this._state);
+        // }
     }
 
 }
 
-export const changeMessageTitleAC = (text: string) => ({type: 'CHANGE_NEW_TITLE_MESSAGE', text} as const)
 
-export const addMessageAC = () => ({type: 'ADD_NEW_MESSAGE'} as const)
 
-export const addPostAC = () => ({type: 'ADD_POST'} as const)
 
-export const onChangePostAC = (text: string) => ({type: "CHANGE_POST_VALUE", text} as const)
 

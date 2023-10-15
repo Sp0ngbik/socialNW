@@ -2,7 +2,8 @@ import React, {RefObject, useRef} from 'react';
 import s from './dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {addMessageAC, changeMessageTitleAC, T_MainActionType, T_Message, T_UserDialog} from "../../redux/state";
+import { T_MainActionType, T_Message, T_UserDialog} from "../../redux/state";
+import {addMessageAC, changeMessageTitleAC} from "../../redux/reducers/dialogReducer";
 
 
 type T_Dialog = {

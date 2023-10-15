@@ -1,6 +1,3 @@
-export const sideBarReducer = (state:any,action:any)=>{
-    switch (action.type){
-        case 'xxx':
-            return state
-    }
+export const sideBarReducer = (state: any, action: any) => {
+  return state
 }

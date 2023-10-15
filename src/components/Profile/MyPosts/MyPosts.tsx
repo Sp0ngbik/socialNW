@@ -1,7 +1,8 @@
 import React, {FC, RefObject, useRef} from 'react';
 import s from './MyPosts.module.css';
-import {addPostAC, onChangePostAC, T_MainActionType, T_PostData} from "../../../redux/state";
+import { T_MainActionType, T_PostData} from "../../../redux/state";
 import Post from "./Post/Post";
+import {addPostAC, onChangePostAC} from "../../../redux/reducers/profileReducer";
 
 
 
