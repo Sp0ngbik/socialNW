@@ -20,7 +20,7 @@ const rerenderEntireThree = (store: RootState) => {
     );
 }
 // rerenderEntireThree(store.getState())
-// store.subscribe(rerenderEntireThree)
+// store.subscribe(rerenderEntireThree)s
 rerenderEntireThree(reduxStore.getState())
 reduxStore.subscribe(() =>
     rerenderEntireThree(reduxStore.getState())
