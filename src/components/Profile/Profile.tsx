@@ -1,23 +1,17 @@
 import React, {FC} from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {T_MainActionType, T_PostData} from "../../redux/state";
-import MyPosts from "./MyPosts/MyPosts";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {RootState} from "../../redux/reduxStore";
 
 type T_ProfilePage = {
-    profilePage: {
-        newTextForPost: string,
-        posts: T_PostData[]
-    }
-    // onChangePostValue: (value: string) => void
-    // addPost: () => void
-    dispatch: (action: T_MainActionType) => void
+ store:RootState
 }
-const Profile: FC<T_ProfilePage> = ({profilePage,dispatch}) => {
+const Profile: FC<T_ProfilePage> = ({store}) => {
     return (
         <div className={s.content}>
             <ProfileInfo/>
-            <MyPosts dispatch={dispatch}  profilePage={profilePage}/>
+            <MyPostsContainer store={store} />
         </div>
     )
 }

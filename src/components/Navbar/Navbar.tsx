@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
-import {T_Friend} from "../../redux/state";
+import {T_Friend} from "../../redux/store";
 
 type T_NavaBarPage = {
     friends: T_Friend[]

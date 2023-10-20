@@ -1,5 +1,5 @@
 import React from 'react';
-import {T_Message} from "../../../redux/state";
+import {T_Message} from "../../../redux/store";
 
 const Message = (props: T_Message) => {
     return <div>{props.message}</div>

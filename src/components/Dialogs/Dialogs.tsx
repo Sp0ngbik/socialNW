@@ -2,8 +2,7 @@ import React, {RefObject, useRef} from 'react';
 import s from './dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { T_MainActionType, T_Message, T_UserDialog} from "../../redux/state";
-import {addMessageAC, changeMessageTitleAC} from "../../redux/reducers/dialogReducer";
+import {T_Message, T_UserDialog} from "../../redux/store";
 
 
 type T_Dialog = {
@@ -12,16 +11,17 @@ type T_Dialog = {
         dialogsData: T_UserDialog[],
         messageData: T_Message[],
     }
-    dispatch: (action: T_MainActionType) => void
+    onChangeDialogHandler: (text: string) => void
+    addMessage: () => void
 }
 
 const Dialogs = (props: T_Dialog) => {
         const refMessage: RefObject<HTMLTextAreaElement> = useRef(null)
         const addMessageHandler = () => {
-            props.dispatch(addMessageAC())
+            props.addMessage()
         }
         const onChangeDialogHandler = () => {
-            refMessage.current && props.dispatch(changeMessageTitleAC(refMessage.current.value))
+            refMessage.current && props.onChangeDialogHandler(refMessage.current.value)
         }
         return (
             <div className={s.dialogs}>

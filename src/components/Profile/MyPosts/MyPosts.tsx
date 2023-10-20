@@ -1,9 +1,7 @@
 import React, {FC, RefObject, useRef} from 'react';
 import s from './MyPosts.module.css';
-import { T_MainActionType, T_PostData} from "../../../redux/state";
+import {T_PostData} from "../../../redux/store";
 import Post from "./Post/Post";
-import {addPostAC, onChangePostAC} from "../../../redux/reducers/profileReducer";
-
 
 
 type T_MyPosts = {
@@ -11,21 +9,21 @@ type T_MyPosts = {
         newTextForPost: string,
         posts: T_PostData[]
     }
-    dispatch: (action: T_MainActionType) => void
+    updateNewPostText: (text: string) => void
+    addPostFunc: () => void
 }
 
 
-const MyPosts: FC<T_MyPosts> = ({profilePage, dispatch}) => {
+const MyPosts: FC<T_MyPosts> = ({profilePage, updateNewPostText, addPostFunc}) => {
     const newPostTitle: RefObject<HTMLTextAreaElement> = useRef(null)
-    const addPostFunc = () => {
+    const onAddPostFunc = () => {
         if (newPostTitle.current) {
-            // addPost()
-            dispatch(addPostAC())
+            addPostFunc()
         }
     }
     const onPostChange = () => {
         // newPostTitle.current && onChangePostValue(newPostTitle.current?.value)
-        newPostTitle.current && dispatch(onChangePostAC(newPostTitle.current.value))
+        newPostTitle.current && updateNewPostText(newPostTitle.current.value)
     }
 
     return (
@@ -36,7 +34,7 @@ const MyPosts: FC<T_MyPosts> = ({profilePage, dispatch}) => {
                     value={profilePage.newTextForPost}
                     onChange={onPostChange}
                     ref={newPostTitle}/>
-                <button onClick={addPostFunc}>Add post
+                <button onClick={onAddPostFunc}>Add post
                 </button>
             </div>
             <div className={s.posts}>

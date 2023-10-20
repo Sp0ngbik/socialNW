@@ -104,12 +104,15 @@ export const store: T_StoreObject = {
             ]
         }
     },
-    _callSubscriber(state: T_StateObject) {
+
+    ////по сути создается отельная функция типа obsever который передается в subscribe
+    _callSubscriber(store: T_StateObject) {
         console.log('state changed')
     },
     getState() {
         return this._state
     },
+    //: (store: T_StateObject) => void) - это типизация
     subscribe(observer: (store: T_StateObject) => void) {
         this._callSubscriber = observer
     },
