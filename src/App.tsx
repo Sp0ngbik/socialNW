@@ -5,14 +5,12 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
-import {T_MainActionType} from "./redux/store";
 import {RootState} from "./redux/reduxStore";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 type T_AppType = {
     store: RootState;
-    dispatch: (action: T_MainActionType) => void
 }
 const App: FC<T_AppType> = ({store}) => {
     return (

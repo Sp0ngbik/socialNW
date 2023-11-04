@@ -13,9 +13,7 @@ const rerenderEntireThree = (store: RootState) => {
     console.log(store)
     root.render(
         <React.StrictMode>
-            <App store={store}
-                 dispatch={reduxStore.dispatch.bind(reduxStore)}
-            />
+            <App store={store}/>
         </React.StrictMode>
     );
 }
