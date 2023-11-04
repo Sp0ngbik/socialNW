@@ -5,15 +5,17 @@ import ReactDOM from "react-dom/client";
 // import {store} from "./redux/store";
 import App from "./App";
 import {reduxStore, RootState} from "./redux/reduxStore";
+import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 const rerenderEntireThree = (store: RootState) => {
-    console.log(store)
     root.render(
         <React.StrictMode>
-            <App store={store}/>
+            <Provider store={reduxStore}>
+                <App store={store}/>
+            </Provider>
         </React.StrictMode>
     );
 }

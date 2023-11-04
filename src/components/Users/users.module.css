@@ -1,0 +1,11 @@
+.userBlock {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    width: 500px;
+}
+
+.userBlock img {
+    width: 40px;
+    height: 40px;
+}
