@@ -21,12 +21,9 @@ export const profileReducer = (state: T_ProfileReducer = initialState, action: T
                 message: state.newTextForPost,
                 likesCount: 0
             };
-            state.posts.push(newPost);
-            state.newTextForPost = '';
-            return state
+            return {...state, posts: [newPost, ...state.posts], newTextForPost: ''}
         case 'CHANGE_POST_VALUE':
-            state.newTextForPost = action.text
-            return state
+            return {...state, newTextForPost: action.text}
         default:
             return state
     }

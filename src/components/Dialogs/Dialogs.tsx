@@ -12,13 +12,13 @@ type T_Dialog = {
         messageData: T_Message[],
     }
     onChangeDialogHandler: (text: string) => void
-    addMessage: () => void
+    addMessageHandler: () => void
 }
 
 const Dialogs = (props: T_Dialog) => {
         const refMessage: RefObject<HTMLTextAreaElement> = useRef(null)
         const addMessageHandler = () => {
-            props.addMessage()
+            props.addMessageHandler()
         }
         const onChangeDialogHandler = () => {
             refMessage.current && props.onChangeDialogHandler(refMessage.current.value)

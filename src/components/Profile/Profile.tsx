@@ -1,17 +1,14 @@
-import React, {FC} from 'react';
+import React from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {RootState} from "../../redux/reduxStore";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
-type T_ProfilePage = {
- store:RootState
-}
-const Profile: FC<T_ProfilePage> = ({store}) => {
+
+const Profile = () => {
     return (
         <div className={s.content}>
             <ProfileInfo/>
-            <MyPostsContainer store={store} />
+            <MyPostsContainer/>
         </div>
     )
 }

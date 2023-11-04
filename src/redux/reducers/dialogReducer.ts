@@ -24,16 +24,16 @@ const initialState = {
 export const dialogReducer = (state: T_DialogState = initialState, action: T_MainActionType) => {
     switch (action.type) {
         case 'ADD_NEW_MESSAGE':
-            let newMessage = {
+            const newMessage = {
                 id: state.messageData.length + 1,
                 message: state.newMessageTitle
             }
-            state.messageData.push(newMessage)
-            state.newMessageTitle = ''
-            return state
+            return {...state, messageData: [...state.messageData, newMessage], newMessageTitle: ''}
         case 'CHANGE_NEW_TITLE_MESSAGE':
-            state.newMessageTitle = action.text
-            return state
+            return {...state, newMessageTitle: action.text}
+
+        // state.newMessageTitle = action.text
+        // return state
         default:
             return state
     }
