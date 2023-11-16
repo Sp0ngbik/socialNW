@@ -1,83 +1,83 @@
-export type T_UserReducerInitial = {
-    users: {
-        id: string,
-        fullName: string,
-        followed: boolean,
-        status: string,
-        photoUrl: string
-        location: {
-            city: string,
-            country: string
-        }
-    }[]
+export type T_UsersBody = {
+    id: number,
+    name: string,
+    status: string,
+    photos: {
+        small: string,
+        large: string
+    }
+    followed: boolean
 }
 
-const initialState: T_UserReducerInitial = {
-    users: [
-        {
-            id: crypto.randomUUID(),
-            fullName: 'Uladzislau',
-            followed: true,
-            status: 'Hello there',
-            photoUrl: 'https://avatars.githubusercontent.com/u/18171050?v=4?s=400',
-            location: {city: 'Brest', country: 'Belarus'}
-        },
-        {
-            id: crypto.randomUUID(),
-            followed: true,
-            fullName: 'Darya',
-            status: 'General Kenobi',
-            photoUrl: 'https://avatars.githubusercontent.com/u/18171050?v=4?s=400',
-            location: {city: 'Brest', country: 'Belarus'}
-        },
-        {
-            id: crypto.randomUUID(),
-            followed: false,
-            fullName: 'Pavel',
-            status: 'Spook there',
-            photoUrl: 'https://avatars.githubusercontent.com/u/18171050?v=4?s=400',
-            location: {city: 'Brest', country: 'Belarus'}
-        },
-        {
-            id: crypto.randomUUID(),
-            followed: false,
-            fullName: 'Ihor',
-            status: 'Aight there',
-            photoUrl: 'https://avatars.githubusercontent.com/u/18171050?v=4?s=400',
-            location: {city: 'Brest', country: 'Belarus'}
-        }
-    ]
+export type T_GetUsers = {
+    items: T_UsersBody[]
+    pageSize: number,
+    totalCount: number,
+    activePage: number
+    isLoading: boolean
 }
 
-export const followAC = (userId: string) => {
+
+const initialState: T_GetUsers = {
+    items: [],
+    pageSize: 10,
+    totalCount: 0,
+    activePage: 1,
+    isLoading: false
+}
+
+export const follow = (userId: number) => {
     return {type: 'FOLLOW_ACTION', userId} as const
 }
 
-export const unFollowAC = (userId: string) => {
+export const unFollow = (userId: number) => {
     return {type: 'UNFOLLOW_ACTION', userId} as const
 }
 
-export const setUsersAC = (users: any) => {
+export const setUsers = (users: T_GetUsers) => {
     return {type: 'SET_USERS', users} as const
 }
 
-type T_SetUsers = ReturnType<typeof setUsersAC>
-type T_FollowAC = ReturnType<typeof followAC>
-type T_UnFollowAC = ReturnType<typeof unFollowAC>
+export const setActivePage = (page: number) => {
+    return {type: 'CHANGE_ACTIVE_PAGE', page} as const
+}
 
-export type T_MainUsersAction = T_FollowAC | T_UnFollowAC | T_SetUsers
+export const toggleLoader = (loaderStatus: boolean) => {
+    return {type: 'SWITCH_LOADER', loaderStatus} as const
+}
+
+type T_SetUsers = ReturnType<typeof setUsers>
+type T_FollowAC = ReturnType<typeof follow>
+type T_UnFollowAC = ReturnType<typeof unFollow>
+type T_ToggleLoaderAC = ReturnType<typeof toggleLoader>
+type T_ChangeActivePageAC = ReturnType<typeof setActivePage>
+
+export type T_MainUsersAction = T_FollowAC | T_UnFollowAC | T_SetUsers | T_ChangeActivePageAC | T_ToggleLoaderAC
 
 export const usersReducer = (state = initialState, action: T_MainUsersAction) => {
     switch (action.type) {
         case "FOLLOW_ACTION": {
-            return {...state, users: state.users.map(el => el.id === action.userId ? {...el, followed: true} : el)}
+            return {
+                ...state,
+                items: state.items.map(el => el.id === action.userId ? {...el, followed: false} : el)
+            }
         }
         case "UNFOLLOW_ACTION": {
-            return {...state, users: state.users.map(el => el.id === action.userId ? {...el, followed: false} : el)}
+            return {...state, items: state.items.map(el => el.id === action.userId ? {...el, followed: true} : el)}
 
         }
         case "SET_USERS": {
-            return {...state, users: [...state.users, action.users]}
+            return {
+                ...state,
+                items: action.users.items,
+                totalCount: action.users.totalCount
+            }
+        }
+        case "CHANGE_ACTIVE_PAGE": {
+            return {...state, activePage: action.page}
+        }
+        case "SWITCH_LOADER": {
+            return {...state, isLoading: action.loaderStatus}
         }
         default:
             return state

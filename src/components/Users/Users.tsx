@@ -1,41 +1,65 @@
-import React from 'react';
-import {T_UserReducerInitial} from "../../redux/reducers/usersReducer";
-import style from './users.module.css'
+import React, {FC} from 'react';
+import style from "./users.module.css";
+import userDefaultImage from "../../assets/images/icon-256x256.png";
+import {T_UsersBody} from "../../redux/reducers/usersReducer";
 
 type T_UsersProps = {
-    usersPage: T_UserReducerInitial,
-    follow: (userId: string) => void,
-    unFollow: (userId: string) => void,
-    getUsers: (users: any) => void
+    follow: (userId: number) => void,
+    unFollow: (userId: number) => void,
+    usersPage: T_UsersBody[],
+    pageSize: number,
+    totalCount: number,
+    activePage: number,
+    onPageChanged: (pageNumber: number) => void
 }
 
-const Users: React.FC<T_UsersProps> = ({usersPage, follow, unFollow}) => {
+export const Users: FC<T_UsersProps> = ({
+                                            follow,
+                                            unFollow,
+                                            usersPage,
+                                            // pageSize,
+                                            // totalCount,
+                                            activePage,
+                                            onPageChanged
+                                        }) => {
+    // let pagesCount = Math.ceil(totalCount / pageSize)
+    let pages: number[] = []
+    for (let i = 1; i < 10; i++) {
+        pages.push(i)
+    }
     return (
         <div>
-            {usersPage.users.map(user =>
-                <div key={user.id} className={style.userBlock}>
-                    <span>
-                        <div>
-                            <img
-                                src={user.photoUrl}
-                                alt={'user nf'}/>
-                        </div>
-                        <div>
-                        {user.followed ?
-                            <button onClick={() => unFollow(user.id)}>Follow</button> :
-                            <button onClick={() => follow(user.id)}>Unfollow</button>
-                        }
-                        </div>
-                    </span>
-                    <span>
-                    <span>
-                        <div>{user.fullName}</div><div>{user.status}</div>
-                    </span>
-                    <span>
-                        <div>{user.location.country}</div><div>{user.location.city}</div>
+            {pages.map(p => {
+                return <button key={crypto.randomUUID()}
+                               onClick={() => onPageChanged(p)}
+                               className={activePage === p ? style.selectedPage : ''}>
+                    {p}</button>
+            })}
 
-                    </span>
-                    </span>
+            {usersPage.map(user =>
+                <div key={user.id} className={style.userBlock}>
+                     <span>
+                         <div>
+                             <img
+                                 src={user.photos.small || userDefaultImage}
+                                 alt={'user nf'}/>
+                         </div>
+                         <div>
+                         {user.followed ?
+                             <button onClick={() => follow(user.id)}>Unfollow</button>
+                             :
+                             <button onClick={() => unFollow(user.id)}>Follow</button>
+                         }
+                         </div>
+                     </span>
+                    <span>
+                    <span>
+                         <div>{user.name}</div><div>{user.status}</div>
+                     </span>
+                     <span>
+                         <div>{'user.location.country'}</div><div>{'user.location.city'}</div>
+                     </span>
+                     </span>
                 </div>)}
         </div>
     );

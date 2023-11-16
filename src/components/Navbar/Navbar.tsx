@@ -24,11 +24,14 @@ const Navbar: FC<T_NavaBarPage> = ({friends}) => {
         <div className={s.item}>
             <NavLink className={({isActive}) => isActive ? s.active : ''} to={"/setting"}>Settings</NavLink>
         </div>
+        <div className={s.item}>
+            <NavLink className={({isActive}) => isActive ? s.active : ''} to={'/users'}>Users</NavLink>
+        </div>
         <div className={s.friendsBlock}>
-            <h2 >Friends block</h2>
+            <h2>Friends block</h2>
             <div className={s.friendInfo}>
                 {friends.map((el) => {
-                    return <img  key={el.id} alt={'user ava not found'} src={el.imageSrc}/>
+                    return <img key={el.id} alt={'user ava not found'} src={el.imageSrc}/>
                 })}
             </div>
         </div>
