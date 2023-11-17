@@ -22,7 +22,6 @@ type T_UsersProps = {
     follow: (userId: number) => void,
     unFollow: (userId: number) => void,
     setActivePage: (pageNumber: number) => void,
-    // getUsers: (activePage: number, pageSize: number) => void
     setUsers: (users: T_GetUsers) => void
     toggleLoader: (loaderStatus: boolean) => void
     isLoading: boolean
@@ -114,7 +113,7 @@ const mapDispatch = {
     unFollow,
     toggleLoader,
     setUsers,
-    setActivePage
+    setActivePage,
 }
 export default connect(mapStateToProps,
     mapDispatch

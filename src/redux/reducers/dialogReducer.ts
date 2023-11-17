@@ -1,6 +1,6 @@
 import {T_MainActionType, T_Message, T_UserDialog} from "../store";
 
-type T_DialogState = {
+export type T_DialogState = {
     newMessageTitle: string
     dialogsData: T_UserDialog[],
     messageData: T_Message[],
@@ -28,12 +28,9 @@ export const dialogReducer = (state: T_DialogState = initialState, action: T_Mai
                 id: state.messageData.length + 1,
                 message: state.newMessageTitle
             }
-            return {...state, messageData: [...state.messageData, newMessage], newMessageTitle: ''}
+            return {...state, messageData: [newMessage, ...state.messageData], newMessageTitle: ''}
         case 'CHANGE_NEW_TITLE_MESSAGE':
             return {...state, newMessageTitle: action.text}
-
-        // state.newMessageTitle = action.text
-        // return state
         default:
             return state
     }

@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import style from "./users.module.css";
 import userDefaultImage from "../../assets/images/icon-256x256.png";
 import {T_UsersBody} from "../../redux/reducers/usersReducer";
+import {NavLink} from "react-router-dom";
 
 type T_UsersProps = {
     follow: (userId: number) => void,
@@ -40,9 +41,11 @@ export const Users: FC<T_UsersProps> = ({
                 <div key={user.id} className={style.userBlock}>
                      <span>
                          <div>
+                             <NavLink to={`/profile/${user.id}`}>
                              <img
                                  src={user.photos.small || userDefaultImage}
                                  alt={'user nf'}/>
+                             </NavLink>
                          </div>
                          <div>
                          {user.followed ?

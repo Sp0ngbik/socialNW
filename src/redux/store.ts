@@ -131,9 +131,9 @@ export const store: T_StoreObject = {
     //     this._callSubscriber(this._state)
     // },
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogPage = dialogReducer(this._state.dialogPage, action)
-        this._state.sidebar = sideBarReducer(this._state.sidebar, action)
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.dialogPage = dialogReducer(this._state.dialogPage, action)
+        // this._state.sidebar = sideBarReducer(this._state.sidebar, action)
         this._callSubscriber(this._state);
         // if (action.type === 'ADD_POST') {
         //     let newPost = {

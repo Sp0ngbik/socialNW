@@ -46,6 +46,7 @@ export const toggleLoader = (loaderStatus: boolean) => {
     return {type: 'SWITCH_LOADER', loaderStatus} as const
 }
 
+
 type T_SetUsers = ReturnType<typeof setUsers>
 type T_FollowAC = ReturnType<typeof follow>
 type T_UnFollowAC = ReturnType<typeof unFollow>

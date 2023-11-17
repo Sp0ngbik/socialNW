@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
+import {T_UserProfileBody} from "../../../redux/reducers/profileReducer";
+import Preloader from "../../common/Preloader/Preloader";
 
-const ProfileInfo = () => {
+type T_ProfileInfoProps = {
+    profile: T_UserProfileBody | null
+}
+
+
+const ProfileInfo: FC<T_ProfileInfoProps> = ({profile}) => {
+
+    if (!profile) {
+        return <Preloader/>
+    }
     return (
         <div>
             <div>
@@ -8,8 +19,13 @@ const ProfileInfo = () => {
                      src='https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350'/>
             </div>
             <div>
-                ava + description
+                <h3>{profile.fullName}</h3>
+                <img src={profile.photos.large || profile.photos.small || ''} alt={'ava not found'}/>
+                <div>
+                    {profile.aboutMe}
+                </div>
             </div>
+
         </div>
     );
 };
