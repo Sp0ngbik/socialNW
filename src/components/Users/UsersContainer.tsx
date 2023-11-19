@@ -9,12 +9,12 @@ import {
     toggleLoader,
     unFollow
 } from "../../redux/reducers/usersReducer";
-import axios from "axios";
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {Api_users} from "../../api/api_users";
 
-type T_UsersProps = {
+export type T_UsersContainerProps = {
     usersPage: T_UsersBody[],
     totalCount: number,
     pageSize: number,
@@ -27,38 +27,51 @@ type T_UsersProps = {
     isLoading: boolean
 }
 
-class UsersContainer extends React.Component<T_UsersProps> {
+class UsersContainer extends React.Component<T_UsersContainerProps> {
     async componentDidMount() {
         this.props.toggleLoader(true);
-        const response =
-            await axios.get<T_GetUsers>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.activePage}&count=${this.props.pageSize}`);
-        this.props.setUsers(response.data);
+        const response = await Api_users.getUsers(this.props.pageSize, this.props.activePage)
+        this.props.setUsers(response);
         this.props.toggleLoader(false);
     }
 
     async onPageChanged(pageNumber: number) {
         this.props.toggleLoader(true);
         this.props.setActivePage(pageNumber)
-        const response =
-            await axios.get<T_GetUsers>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`);
-        this.props.setUsers(response.data);
+        const response = await Api_users.getUsers(this.props.pageSize, pageNumber)
+        this.props.setUsers(response);
         this.props.toggleLoader(false);
 
     }
 
+    async followHandler(userId: number) {
+        try {
+            await Api_users.followUser(userId)
+            this.props.follow(userId)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async unFollowHandler(userId: number) {
+        try {
+            await Api_users.unFollowUser(userId)
+            this.props.unFollow(userId)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     render() {
-        const {follow, unFollow, usersPage, activePage, totalCount, pageSize, isLoading} = this.props
+        const {isLoading} = this.props
         return (
             <>
                 {isLoading ?
                     <Preloader/> :
-                    <Users follow={follow}
-                           unFollow={unFollow}
-                           totalCount={totalCount}
-                           usersPage={usersPage}
-                           activePage={activePage}
-                           pageSize={pageSize}
-                           onPageChanged={this.onPageChanged.bind(this)}/>
+                    <Users {...this.props} onPageChanged={this.onPageChanged.bind(this)}
+                           followHandler={this.followHandler.bind(this)}
+                           unFollowHandler={this.unFollowHandler.bind(this)}
+                    />
                 }
 
             </>

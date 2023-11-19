@@ -60,11 +60,11 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
         case "FOLLOW_ACTION": {
             return {
                 ...state,
-                items: state.items.map(el => el.id === action.userId ? {...el, followed: false} : el)
+                items: state.items.map(el => el.id === action.userId ? {...el, followed: true} : el)
             }
         }
         case "UNFOLLOW_ACTION": {
-            return {...state, items: state.items.map(el => el.id === action.userId ? {...el, followed: true} : el)}
+            return {...state, items: state.items.map(el => el.id === action.userId ? {...el, followed: false} : el)}
 
         }
         case "SET_USERS": {

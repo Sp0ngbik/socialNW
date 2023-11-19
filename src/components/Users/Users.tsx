@@ -1,28 +1,26 @@
 import React, {FC} from 'react';
 import style from "./users.module.css";
 import userDefaultImage from "../../assets/images/icon-256x256.png";
-import {T_UsersBody} from "../../redux/reducers/usersReducer";
 import {NavLink} from "react-router-dom";
+import {T_UsersContainerProps} from "./UsersContainer";
 
 type T_UsersProps = {
-    follow: (userId: number) => void,
-    unFollow: (userId: number) => void,
-    usersPage: T_UsersBody[],
-    pageSize: number,
-    totalCount: number,
-    activePage: number,
     onPageChanged: (pageNumber: number) => void
+    followHandler: (userId: number) => void
+    unFollowHandler: (userId: number) => void
 }
 
-export const Users: FC<T_UsersProps> = ({
-                                            follow,
-                                            unFollow,
-                                            usersPage,
-                                            // pageSize,
-                                            // totalCount,
-                                            activePage,
-                                            onPageChanged
-                                        }) => {
+export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
+                                                                    follow,
+                                                                    unFollow,
+                                                                    usersPage,
+                                                                    // pageSize,
+                                                                    // totalCount,
+                                                                    activePage,
+                                                                    onPageChanged,
+                                                                    followHandler,
+                                                                    unFollowHandler
+                                                                }) => {
     // let pagesCount = Math.ceil(totalCount / pageSize)
     let pages: number[] = []
     for (let i = 1; i < 10; i++) {
@@ -49,9 +47,9 @@ export const Users: FC<T_UsersProps> = ({
                          </div>
                          <div>
                          {user.followed ?
-                             <button onClick={() => follow(user.id)}>Unfollow</button>
+                             <button onClick={() => unFollowHandler(user.id)}>Unfollow</button>
                              :
-                             <button onClick={() => unFollow(user.id)}>Follow</button>
+                             <button onClick={() => followHandler(user.id)}>Follow</button>
                          }
                          </div>
                      </span>

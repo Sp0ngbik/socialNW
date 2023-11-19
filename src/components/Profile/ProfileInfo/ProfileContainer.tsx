@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import {RootState} from "../../../redux/reduxStore";
 import {setUserProfile, T_UserProfileBody} from "../../../redux/reducers/profileReducer";
 import axios from "axios";
-import React from "react";
+import React, {FC, useEffect} from "react";
 import Profile from "../Profile";
+import {useParams} from "react-router-dom";
 
 export type T_ProfileProps = {
     setUserProfile: (userProfileBody: T_UserProfileBody) => void
@@ -13,25 +14,48 @@ export type T_ProfileProps = {
     isLoading: boolean,
 }
 
-
-class ProfileContainer extends React.Component<T_ProfileProps> {
-
-    async componentDidMount() {
-        this.props.toggleLoader(true);
-        const location = document.location.pathname.split('/').slice(-1).join('')
-        await axios.get<T_UserProfileBody>(`https://social-network.samuraijs.com/api/1.0/profile/${location}`)
+const ProfileContainer: FC<T_ProfileProps> = ({setUserProfile, userProfile, isLoading, toggleLoader}) => {
+    const params = useParams<{ id: string }>()
+    let userId = params.id
+    if (!userId) {
+        userId = '2'
+    }
+    useEffect(() => {
+        toggleLoader(true)
+        axios.get<T_UserProfileBody>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then(res => {
-                this.props.setUserProfile(res.data);
-                this.props.toggleLoader(false);
+                setUserProfile(res.data);
+                toggleLoader(false);
             });
-    }
-
-    render() {
-        return (
-            <Profile {...this.props}/>
-        );
-    }
+    }, [userId, setUserProfile, toggleLoader]);
+    return <Profile setUserProfile={setUserProfile}
+                    toggleLoader={toggleLoader}
+                    userProfile={userProfile}
+                    isLoading={isLoading}/>
 }
+
+// class ProfileContainer extends React.Component<T_ProfileProps> {
+//
+//     async componentDidMount() {
+//         this.props.toggleLoader(true);
+//         let location = document.location.pathname.split('/')
+//         let userId = '2'
+//         if (location.length > 2) {
+//             userId = location.slice(-1).join('')
+//         }
+//         await axios.get<T_UserProfileBody>(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+//             .then(res => {
+//                 this.props.setUserProfile(res.data);
+//                 this.props.toggleLoader(false);
+//             });
+//     }
+//
+//     render() {
+//         return (
+//             <Profile {...this.props}/>
+//         );
+//     }
+// }
 
 const mapStateProps = (state: RootState) => {
     return {
@@ -44,7 +68,5 @@ const mapDispatchProps = {
     toggleLoader,
 }
 
-// let withUrlData= withRouter(ProfileContainer)
 // const WithUrlData = withRouter(ProfileContainer)
-// export default connect(mapStateProps, mapDispatchProps)(WithUrlData);
-// export default connect(mapStateProps, mapDispatchProps)(ProfileContainer);
+export default connect(mapStateProps, mapDispatchProps)(ProfileContainer);

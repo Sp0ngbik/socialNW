@@ -7,3 +7,13 @@
     width: 20px;
 }
 
+.login_block {
+    float: right;
+    font-size: 25px;
+}
+
+.login_block a {
+    color: #ffffff;
+    padding: 0 10px 0 0;
+    text-decoration: none;
+}
