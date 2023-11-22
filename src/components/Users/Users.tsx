@@ -20,7 +20,6 @@ export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
                                                                     onPageChanged,
                                                                     followHandler,
                                                                     unFollowHandler,
-                                                                    isFollowingInProgress
                                                                 }) => {
     // let pagesCount = Math.ceil(totalCount / pageSize)
     let pages: number[] = []
@@ -48,11 +47,13 @@ export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
                          </div>
                          <div>
                          {user.followed ?
-                             <button disabled={isFollowingInProgress}
-                                     onClick={() => unFollowHandler(user.id)}>Unfollow</button>
+                             <button
+                                 disabled={user.followingInProgress}
+                                 onClick={() => unFollowHandler(user.id)}>Unfollow</button>
                              :
-                             <button disabled={isFollowingInProgress}
-                                     onClick={() => followHandler(user.id)}>Follow</button>
+                             <button
+                                 disabled={user.followingInProgress}
+                                 onClick={() => followHandler(user.id)}>Follow</button>
                          }
                          </div>
                      </span>

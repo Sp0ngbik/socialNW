@@ -25,9 +25,9 @@ export type T_UsersContainerProps = {
     setActivePage: (pageNumber: number) => void,
     setUsers: (users: T_GetUsers) => void
     toggleLoader: (loaderStatus: boolean) => void
-    toggleFollowedLoader: (loaderStatus: boolean) => void
+    toggleFollowedLoader: (userId: number, loaderStatus: boolean) => void
     isFetching: boolean
-    isFollowingInProgress: boolean
+    // isFollowingInProgress: boolean
 }
 
 class UsersContainer extends React.Component<T_UsersContainerProps> {
@@ -49,25 +49,25 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
 
     async followHandler(userId: number) {
         try {
-            this.props.toggleFollowedLoader(true)
+            this.props.toggleFollowedLoader(userId, true)
             await Api_users.followUser(userId)
             this.props.follow(userId)
         } catch (e) {
             console.log(e)
         } finally {
-            this.props.toggleFollowedLoader(false)
+            this.props.toggleFollowedLoader(userId, false)
         }
     }
 
     async unFollowHandler(userId: number) {
         try {
-            this.props.toggleFollowedLoader(true)
+            this.props.toggleFollowedLoader(userId, true)
             await Api_users.unFollowUser(userId)
             this.props.unFollow(userId)
         } catch (e) {
             console.log(e)
         } finally {
-            this.props.toggleFollowedLoader(false)
+            this.props.toggleFollowedLoader(userId, false)
         }
     }
 
@@ -99,7 +99,7 @@ let mapStateToProps = (state: RootState) => {
         pageSize: state.usersPage.pageSize,
         activePage: state.usersPage.activePage,
         isFetching: state.usersPage.isFetching,
-        isFollowingInProgress: state.usersPage.followingInProgress
+        // isFollowingInProgress: state.usersPage.followingInProgress
     }
 }
 

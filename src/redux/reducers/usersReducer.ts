@@ -7,6 +7,7 @@ export type T_UsersBody = {
         large: string
     }
     followed: boolean
+    followingInProgress: boolean
 }
 
 export type T_GetUsers = {
@@ -15,7 +16,6 @@ export type T_GetUsers = {
     totalCount: number,
     activePage: number
     isFetching: boolean
-    followingInProgress: boolean
 }
 
 
@@ -25,7 +25,6 @@ const initialState: T_GetUsers = {
     totalCount: 0,
     activePage: 1,
     isFetching: false,
-    followingInProgress: false
 }
 
 export const follow = (userId: number) => {
@@ -47,8 +46,8 @@ export const setActivePage = (page: number) => {
 export const toggleLoader = (loaderStatus: boolean) => {
     return {type: 'SWITCH_LOADER', loaderStatus} as const
 }
-export const toggleFollowedLoader = (isFollowing: boolean) => {
-    return {type: 'SWITCH_FOLLOW_LOADER', isFollowing} as const
+export const toggleFollowedLoader = (userId: number, isFollowing: boolean) => {
+    return {type: 'SWITCH_FOLLOW_LOADER', userId, isFollowing} as const
 }
 
 type T_SetUsers = ReturnType<typeof setUsers>
@@ -82,14 +81,21 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
             return {
                 ...state,
                 items: action.users.items,
-                totalCount: action.users.totalCount
+                totalCount: action.users.totalCount,
+                followingInProgress: false
             }
         }
         case "CHANGE_ACTIVE_PAGE": {
             return {...state, activePage: action.page}
         }
         case "SWITCH_FOLLOW_LOADER": {
-            return {...state, followingInProgress: action.isFollowing}
+            return {
+                ...state,
+                items: state.items.map(el => el.id === action.userId ? {
+                    ...el,
+                    followingInProgress: action.isFollowing
+                } : el)
+            }
         }
         case "SWITCH_LOADER": {
             return {...state, isLoading: action.loaderStatus}
