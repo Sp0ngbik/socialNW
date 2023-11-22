@@ -14,7 +14,8 @@ export type T_GetUsers = {
     pageSize: number,
     totalCount: number,
     activePage: number
-    isLoading: boolean
+    isFetching: boolean
+    followingInProgress: boolean
 }
 
 
@@ -23,7 +24,8 @@ const initialState: T_GetUsers = {
     pageSize: 10,
     totalCount: 0,
     activePage: 1,
-    isLoading: false
+    isFetching: false,
+    followingInProgress: false
 }
 
 export const follow = (userId: number) => {
@@ -45,15 +47,24 @@ export const setActivePage = (page: number) => {
 export const toggleLoader = (loaderStatus: boolean) => {
     return {type: 'SWITCH_LOADER', loaderStatus} as const
 }
-
+export const toggleFollowedLoader = (isFollowing: boolean) => {
+    return {type: 'SWITCH_FOLLOW_LOADER', isFollowing} as const
+}
 
 type T_SetUsers = ReturnType<typeof setUsers>
 type T_FollowAC = ReturnType<typeof follow>
 type T_UnFollowAC = ReturnType<typeof unFollow>
 type T_ToggleLoaderAC = ReturnType<typeof toggleLoader>
 type T_ChangeActivePageAC = ReturnType<typeof setActivePage>
+type T_ToggleFollowAC = ReturnType<typeof toggleFollowedLoader>
 
-export type T_MainUsersAction = T_FollowAC | T_UnFollowAC | T_SetUsers | T_ChangeActivePageAC | T_ToggleLoaderAC
+export type T_MainUsersAction =
+    T_FollowAC
+    | T_UnFollowAC
+    | T_SetUsers
+    | T_ChangeActivePageAC
+    | T_ToggleLoaderAC
+    | T_ToggleFollowAC
 
 export const usersReducer = (state = initialState, action: T_MainUsersAction) => {
     switch (action.type) {
@@ -76,6 +87,9 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
         }
         case "CHANGE_ACTIVE_PAGE": {
             return {...state, activePage: action.page}
+        }
+        case "SWITCH_FOLLOW_LOADER": {
+            return {...state, followingInProgress: action.isFollowing}
         }
         case "SWITCH_LOADER": {
             return {...state, isLoading: action.loaderStatus}

@@ -6,6 +6,7 @@ import {
     setUsers,
     T_GetUsers,
     T_UsersBody,
+    toggleFollowedLoader,
     toggleLoader,
     unFollow
 } from "../../redux/reducers/usersReducer";
@@ -24,7 +25,9 @@ export type T_UsersContainerProps = {
     setActivePage: (pageNumber: number) => void,
     setUsers: (users: T_GetUsers) => void
     toggleLoader: (loaderStatus: boolean) => void
-    isLoading: boolean
+    toggleFollowedLoader: (loaderStatus: boolean) => void
+    isFetching: boolean
+    isFollowingInProgress: boolean
 }
 
 class UsersContainer extends React.Component<T_UsersContainerProps> {
@@ -46,29 +49,36 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
 
     async followHandler(userId: number) {
         try {
+            this.props.toggleFollowedLoader(true)
             await Api_users.followUser(userId)
             this.props.follow(userId)
         } catch (e) {
             console.log(e)
+        } finally {
+            this.props.toggleFollowedLoader(false)
         }
     }
 
     async unFollowHandler(userId: number) {
         try {
+            this.props.toggleFollowedLoader(true)
             await Api_users.unFollowUser(userId)
             this.props.unFollow(userId)
         } catch (e) {
             console.log(e)
+        } finally {
+            this.props.toggleFollowedLoader(false)
         }
     }
 
     render() {
-        const {isLoading} = this.props
+        const {isFetching} = this.props
         return (
             <>
-                {isLoading ?
+                {isFetching ?
                     <Preloader/> :
-                    <Users {...this.props} onPageChanged={this.onPageChanged.bind(this)}
+                    <Users {...this.props}
+                           onPageChanged={this.onPageChanged.bind(this)}
                            followHandler={this.followHandler.bind(this)}
                            unFollowHandler={this.unFollowHandler.bind(this)}
                     />
@@ -88,7 +98,8 @@ let mapStateToProps = (state: RootState) => {
         totalCount: state.usersPage.totalCount,
         pageSize: state.usersPage.pageSize,
         activePage: state.usersPage.activePage,
-        isLoading: state.usersPage.isLoading
+        isFetching: state.usersPage.isFetching,
+        isFollowingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -127,6 +138,7 @@ const mapDispatch = {
     toggleLoader,
     setUsers,
     setActivePage,
+    toggleFollowedLoader
 }
 export default connect(mapStateToProps,
     mapDispatch

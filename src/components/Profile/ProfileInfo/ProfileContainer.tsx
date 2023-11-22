@@ -11,10 +11,10 @@ export type T_ProfileProps = {
     setUserProfile: (userProfileBody: T_UserProfileBody) => void
     toggleLoader: (loaderStatus: boolean) => void
     userProfile: T_UserProfileBody | null,
-    isLoading: boolean,
+    isFetching: boolean,
 }
 
-const ProfileContainer: FC<T_ProfileProps> = ({setUserProfile, userProfile, isLoading, toggleLoader}) => {
+const ProfileContainer: FC<T_ProfileProps> = ({setUserProfile, userProfile, isFetching, toggleLoader}) => {
     const params = useParams<{ id: string }>()
     let userId = params.id
     if (!userId) {
@@ -31,7 +31,7 @@ const ProfileContainer: FC<T_ProfileProps> = ({setUserProfile, userProfile, isLo
     return <Profile setUserProfile={setUserProfile}
                     toggleLoader={toggleLoader}
                     userProfile={userProfile}
-                    isLoading={isLoading}/>
+                    isFetching={isFetching}/>
 }
 
 // class ProfileContainer extends React.Component<T_ProfileProps> {
@@ -59,7 +59,7 @@ const ProfileContainer: FC<T_ProfileProps> = ({setUserProfile, userProfile, isLo
 
 const mapStateProps = (state: RootState) => {
     return {
-        isLoading: state.usersPage.isLoading,
+        isFetching: state.usersPage.isFetching,
         userProfile: state.profilePage.profile,
     }
 }
