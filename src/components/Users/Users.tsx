@@ -11,8 +11,6 @@ type T_UsersProps = {
 }
 
 export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
-                                                                    follow,
-                                                                    unFollow,
                                                                     usersPage,
                                                                     // pageSize,
                                                                     // totalCount,

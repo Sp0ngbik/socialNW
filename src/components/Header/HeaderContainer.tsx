@@ -1,32 +1,21 @@
 import React from 'react';
 import Header from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setAuthUserDataAC, T_AuthReducerInitial, T_ResponseAuthUser} from "../../redux/reducers/authReducer";
+import {
+    setAuthUserTC,
+    T_AuthReducerInitial,
+} from "../../redux/reducers/authReducer";
 import {RootState} from "../../redux/reduxStore";
 
-type T_ResponseAuthMe = {
-    resultCode: number,
-    messages: string[],
-    data: {
-        id: number,
-        email: string,
-        login: string
-    }
-}
 
 export type T_HeaderContainer = {
-    setAuthUserDataAC: (userData: T_ResponseAuthUser) => void
+    setAuthUserTC: () => void
     authUserState: T_AuthReducerInitial
 }
 
 class HeaderContainer extends React.Component<T_HeaderContainer> {
     componentDidMount() {
-        axios.get<T_ResponseAuthMe>('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true}).then((res) => {
-            if (res.data.resultCode === 0) {
-                this.props.setAuthUserDataAC(res.data.data)
-            }
-        })
+        this.props.setAuthUserTC()
     }
 
     render() {
@@ -43,4 +32,4 @@ const mapStateToProps = (state: RootState) => {
 }
 
 
-export default connect(mapStateToProps, {setAuthUserDataAC})(HeaderContainer);
+export default connect(mapStateToProps, {setAuthUserTC})(HeaderContainer);

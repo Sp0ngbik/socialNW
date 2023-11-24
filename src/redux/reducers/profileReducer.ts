@@ -1,4 +1,7 @@
 import {T_PostData} from "../store";
+import {AppDispatch} from "../reduxStore";
+import {api_profile} from "../../api/api_profile";
+import {toggleLoader} from "./usersReducer";
 
 export type T_UserProfileBody = {
     aboutMe: string,
@@ -70,3 +73,13 @@ export const setUserProfile = (userBody: T_UserProfileBody) => {
     return {type: 'SET_USER_PROFILE', userBody} as const
 }
 
+
+
+export const setUserProfileTC = (userId:string = '2')=>(dispatch:AppDispatch)=>{
+    dispatch(toggleLoader(true))
+    api_profile.getUser(userId || '2')
+        .then(res => {
+            dispatch (setUserProfile(res.data));
+            dispatch(toggleLoader(false));
+        })
+}

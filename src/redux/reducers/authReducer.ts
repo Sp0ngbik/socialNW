@@ -1,3 +1,6 @@
+import {AppDispatch} from "../reduxStore";
+import {api_header} from "../../api/api_header";
+
 export type T_AuthReducerInitial = {
     id: number,
     email: string,
@@ -32,4 +35,12 @@ export const auth_reducer = (state = initialState, action: T_MainType) => {
 
 export const setAuthUserDataAC = (userData: T_ResponseAuthUser) => {
     return {type: "SET_USER_DATA", userData} as const
+}
+
+export const setAuthUserTC = () => (dispatch: AppDispatch) => {
+    api_header.authUser().then((res) => {
+        if (res.data.resultCode === 0) {
+            dispatch(setAuthUserDataAC(res.data.data))
+        }
+    })
 }

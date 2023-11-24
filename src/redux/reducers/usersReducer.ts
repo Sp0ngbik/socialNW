@@ -1,3 +1,6 @@
+import {AppDispatch} from "../reduxStore";
+import {Api_users} from "../../api/api_users";
+
 export type T_UsersBody = {
     id: number,
     name: string,
@@ -105,3 +108,34 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
     }
 }
 
+export const getUsersTC = (pageSize: number, activePage: number) => async (dispatch: AppDispatch) => {
+    dispatch(toggleLoader(true));
+    const response = await Api_users.getUsers(pageSize, activePage)
+    dispatch(setActivePage(activePage))
+    dispatch(setUsers(response));
+    dispatch(toggleLoader(false));
+}
+
+export const followUserTC = (userId: number) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(toggleFollowedLoader(userId, true))
+        await Api_users.followUser(userId)
+        dispatch(follow(userId))
+    } catch (e) {
+        console.log(e)
+    } finally {
+        dispatch(toggleFollowedLoader(userId, false))
+    }
+}
+
+export const unfollowUseTC = (userId: number) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(toggleFollowedLoader(userId, true))
+        await Api_users.unFollowUser(userId)
+        dispatch(unFollow(userId))
+    } catch (e) {
+        console.log(e)
+    } finally {
+        dispatch(toggleFollowedLoader(userId, false))
+    }
+}
