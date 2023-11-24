@@ -1,8 +1,9 @@
-import React, {RefObject, useRef} from 'react';
+import React, {RefObject, useEffect, useRef} from 'react';
 import s from './dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {T_Message, T_UserDialog} from "../../redux/store";
+import {useNavigate} from "react-router-dom";
 
 
 type T_Dialog = {
@@ -11,11 +12,16 @@ type T_Dialog = {
         dialogsData: T_UserDialog[],
         messageData: T_Message[],
     }
+    isAuth: boolean
     onChangeDialogHandler: (text: string) => void
     addMessageHandler: () => void
 }
 
 const Dialogs = (props: T_Dialog) => {
+        const navigate = useNavigate()
+        useEffect(() => {
+            !props.isAuth && navigate('/login')
+        }, [props.isAuth, navigate]);
         const refMessage: RefObject<HTMLTextAreaElement> = useRef(null)
         const addMessageHandler = () => {
             props.addMessageHandler()
