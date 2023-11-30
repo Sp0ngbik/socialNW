@@ -6,6 +6,7 @@ import Profile from "../Profile";
 import {useParams} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks/hooks";
 import {withAuthRedirectHOC} from "../../../hoc/AuthRedirectHOC";
+import {compose} from "redux";
 
 export type T_ProfileProps = {
     setUserProfileTC: (userId: string) => void
@@ -32,7 +33,7 @@ const mapDispatchProps = {
     setUserProfileTC
 }
 
-
+export default compose<React.ComponentType>(withAuthRedirectHOC, connect(mapStateProps, mapDispatchProps))(ProfileContainer)
 // (props: any) => {
 // const navigate = useNavigate()
 // useEffect(() => {
@@ -41,7 +42,7 @@ const mapDispatchProps = {
 // return <ProfileContainer {...props}/>
 // }
 // const WithUrlData = withRouter(ProfileContainer)
-
-let AuthRedirectHOC = withAuthRedirectHOC(ProfileContainer)
-export default connect(mapStateProps, mapDispatchProps)(AuthRedirectHOC);
+//
+// let AuthRedirectHOC = withAuthRedirectHOC(ProfileContainer)
+// export default connect(mapStateProps, mapDispatchProps)(AuthRedirectHOC);
 

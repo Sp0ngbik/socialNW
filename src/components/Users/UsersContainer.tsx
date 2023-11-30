@@ -9,6 +9,8 @@ import {
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {withAuthRedirectHOC} from "../../hoc/AuthRedirectHOC";
 
 export type T_UsersContainerProps = {
     usersPage: T_UsersBody[],
@@ -17,7 +19,7 @@ export type T_UsersContainerProps = {
     isFetching: boolean
     getUsersTC: (pageSize: number, activePage: number) => void
     followUserTC: (userId: number) => void
-    unfollowUseTC: (userId: number) => void
+    unfollowUseTC: (userId: number) => void,
 }
 
 class UsersContainer extends React.Component<T_UsersContainerProps> {
@@ -72,6 +74,11 @@ const mapDispatch = {
     followUserTC,
     unfollowUseTC
 }
-export default connect(mapStateToProps,
-    mapDispatch
+// export default connect(mapStateToProps,
+//     mapDispatch
+// )(UsersContainer)
+
+export default compose<React.ComponentType>(
+    withAuthRedirectHOC,
+    connect(mapStateToProps, mapDispatch),
 )(UsersContainer)

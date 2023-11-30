@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {T_UserProfileBody} from "../../../redux/reducers/profileReducer";
 import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from './ProfileStatus'
 
 type T_ProfileInfoProps = {
     profile: T_UserProfileBody | null
@@ -21,9 +22,7 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile}) => {
             <div>
                 <h3>{profile.fullName}</h3>
                 <img src={profile.photos.large || profile.photos.small || ''} alt={'ava not found'}/>
-                <div>
-                    {profile.aboutMe}
-                </div>
+                <ProfileStatus status={profile.aboutMe}/>
             </div>
 
         </div>

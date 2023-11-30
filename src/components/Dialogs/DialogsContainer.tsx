@@ -3,6 +3,8 @@ import {AppDispatch, RootState} from "../../redux/reduxStore";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirectHOC} from "../../hoc/AuthRedirectHOC";
+import {compose} from "redux";
+import React from "react";
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -28,7 +30,13 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
 //     }, [props.isAuth, navigate]);
 //     return <Dialogs {...props}/>
 // }
-
-
-const AuthRedirectHOC = withAuthRedirectHOC(Dialogs)
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectHOC);
+// compose(
+//     withAuthRedirectHOC,
+//     connect(mapStateToProps, mapDispatchToProps)
+// )(Dialogs)
+//
+// const AuthRedirectHOC = withAuthRedirectHOC(Dialogs)
+export default compose<React.ComponentType>(
+    withAuthRedirectHOC,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Dialogs)
