@@ -23,13 +23,14 @@ beforeEach(() => {
                 small: 'asd',
                 large: null
             },
-            lookingForAJobDescription: 'asd'
+            lookingForAJobDescription: 'asd',
         },
         userId: null,
         newTextForPost: 'testValue',
         posts: [
             {id: 4, message: 'testPost', likesCount: 0}
-        ]
+        ],
+        status: null,
     }
 })
 

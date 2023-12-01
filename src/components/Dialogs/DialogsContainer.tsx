@@ -37,6 +37,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
 //
 // const AuthRedirectHOC = withAuthRedirectHOC(Dialogs)
 export default compose<React.ComponentType>(
-    withAuthRedirectHOC,
+    // withAuthRedirectHOC,
     connect(mapStateToProps, mapDispatchToProps)
 )(Dialogs)

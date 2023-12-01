@@ -56,6 +56,8 @@ export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
                          </div>
                      </span>
                     <span>
+                         <h5>{user.status}</h5>
+
                     <span>
                          <div>{user.name}</div><div>{user.status}</div>
                      </span>

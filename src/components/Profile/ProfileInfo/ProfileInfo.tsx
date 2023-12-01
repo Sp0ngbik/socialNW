@@ -4,11 +4,13 @@ import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from './ProfileStatus'
 
 type T_ProfileInfoProps = {
+    updateUserStatus: (status: string) => void
     profile: T_UserProfileBody | null
+    status: string
 }
 
 
-const ProfileInfo: FC<T_ProfileInfoProps> = ({profile}) => {
+const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, status,updateUserStatus}) => {
 
     if (!profile) {
         return <Preloader/>
@@ -22,7 +24,7 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile}) => {
             <div>
                 <h3>{profile.fullName}</h3>
                 <img src={profile.photos.large || profile.photos.small || ''} alt={'ava not found'}/>
-                <ProfileStatus status={profile.aboutMe}/>
+                <ProfileStatus updateUserStatus={updateUserStatus} status={status}/>
             </div>
 
         </div>

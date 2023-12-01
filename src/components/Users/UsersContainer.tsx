@@ -27,15 +27,15 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
         this.props.getUsersTC(this.props.pageSize, this.props.activePage)
     }
 
-    async onPageChanged(pageNumber: number) {
+    onPageChanged = async (pageNumber: number) => {
         this.props.getUsersTC(this.props.pageSize, pageNumber)
     }
 
-    async followHandler(userId: number) {
+    followHandler = async (userId: number) => {
         this.props.followUserTC(userId)
     }
 
-    async unFollowHandler(userId: number) {
+    unFollowHandler = async (userId: number) => {
         this.props.unfollowUseTC(userId)
     }
 
@@ -46,9 +46,9 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
                 {isFetching ?
                     <Preloader/> :
                     <Users {...this.props}
-                           onPageChanged={this.onPageChanged.bind(this)}
-                           followHandler={this.followHandler.bind(this)}
-                           unFollowHandler={this.unFollowHandler.bind(this)}
+                           onPageChanged={this.onPageChanged}
+                           followHandler={this.followHandler}
+                           unFollowHandler={this.unFollowHandler}
                     />
                 }
 

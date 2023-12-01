@@ -17,6 +17,5 @@ export const reduxStore = legacy_createStore(rootReducer, applyMiddleware(thunk)
 
 export type RootState = ReturnType<typeof reduxStore.getState>
 export type AppDispatch = typeof reduxStore.dispatch
-
 // @ts-ignore
 window.store = reduxStore
