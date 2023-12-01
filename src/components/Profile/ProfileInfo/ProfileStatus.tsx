@@ -12,6 +12,12 @@ class ProfileStatus extends React.Component<T_ProfileStatus, any> {
         status: this.props.status
     }
 
+    componentDidUpdate(prevProps: Readonly<T_ProfileStatus>, prevState: Readonly<any>, snapshot?: any) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
+    }
+
     activateEditModeHandler = () => {
         this.setState({editMode: true})
     }
