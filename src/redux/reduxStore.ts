@@ -11,7 +11,7 @@ let rootReducer = combineReducers({
     dialogPage: dialogReducer,
     sidebar: sideBarReducer,
     usersPage: usersReducer,
-    authReducer: auth_reducer
+    authReducer: auth_reducer,
 })
 export const reduxStore = legacy_createStore(rootReducer, applyMiddleware(thunk))
 

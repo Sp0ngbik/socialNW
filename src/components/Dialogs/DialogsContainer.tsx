@@ -11,7 +11,6 @@ const mapStateToProps = (state: RootState) => {
         dialogPage: state.dialogPage,
     }
 }
-
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
         addMessageHandler: () => {
@@ -23,19 +22,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     }
 }
 
-// const AuthRedirectHOC = (props: any) => {
-//     const navigate = useNavigate()
-//     useEffect(() => {
-//         !props.isAuth && navigate('/login')
-//     }, [props.isAuth, navigate]);
-//     return <Dialogs {...props}/>
-// }
-// compose(
-//     withAuthRedirectHOC,
-//     connect(mapStateToProps, mapDispatchToProps)
-// )(Dialogs)
-//
-// const AuthRedirectHOC = withAuthRedirectHOC(Dialogs)
 export default compose<React.ComponentType>(
     // withAuthRedirectHOC,
     connect(mapStateToProps, mapDispatchToProps)

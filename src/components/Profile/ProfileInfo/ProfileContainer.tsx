@@ -46,15 +46,4 @@ const mapDispatchProps = {
 export default compose<React.ComponentType>(
     // withAuthRedirectHOC,
     connect(mapStateProps, mapDispatchProps))(ProfileContainer)
-// (props: any) => {
-// const navigate = useNavigate()
-// useEffect(() => {
-//     !props.isAuth && navigate('/login')
-// }, [props.isAuth, navigate]);
-// return <ProfileContainer {...props}/>
-// }
-// const WithUrlData = withRouter(ProfileContainer)
-//
-// let AuthRedirectHOC = withAuthRedirectHOC(ProfileContainer)
-// export default connect(mapStateProps, mapDispatchProps)(AuthRedirectHOC);
 
