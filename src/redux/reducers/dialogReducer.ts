@@ -1,13 +1,11 @@
 import {T_MainActionType, T_Message, T_UserDialog} from "../store";
 
 export type T_DialogState = {
-    newMessageTitle: string
     dialogsData: T_UserDialog[],
     messageData: T_Message[],
 }
 
 const initialState = {
-    newMessageTitle: '2',
     dialogsData: [
         {id: 1, name: "Vlad"},
         {id: 2, name: "Ivan"},
@@ -26,17 +24,14 @@ export const dialogReducer = (state: T_DialogState = initialState, action: T_Mai
         case 'ADD_NEW_MESSAGE':
             const newMessage = {
                 id: state.messageData.length + 1,
-                message: state.newMessageTitle
+                message: action.newMessageTitle
             }
-            return {...state, messageData: [newMessage, ...state.messageData], newMessageTitle: ''}
-        case 'CHANGE_NEW_TITLE_MESSAGE':
-            return {...state, newMessageTitle: action.text}
+            return {...state, messageData: [newMessage, ...state.messageData]}
         default:
             return state
     }
 }
 
 
-export const changeMessageTitleAC = (text: string) => ({type: 'CHANGE_NEW_TITLE_MESSAGE', text} as const)
 
-export const addMessageAC = () => ({type: 'ADD_NEW_MESSAGE'} as const)
+export const addMessageAC = (newMessageTitle:string) => ({type: 'ADD_NEW_MESSAGE',newMessageTitle} as const)

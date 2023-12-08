@@ -1,4 +1,4 @@
-import {addPostAC, onChangePostAC, profileReducer, T_ProfileReducer} from "../redux/reducers/profileReducer";
+import {addPostAC, profileReducer, T_ProfileReducer} from "../redux/reducers/profileReducer";
 
 
 let profileState: T_ProfileReducer
@@ -26,7 +26,6 @@ beforeEach(() => {
             lookingForAJobDescription: 'asd',
         },
         userId: null,
-        newTextForPost: 'testValue',
         posts: [
             {id: 4, message: 'testPost', likesCount: 0}
         ],
@@ -36,14 +35,8 @@ beforeEach(() => {
 
 
 test('should add post', () => {
-    let afterAction = profileReducer(profileState, addPostAC())
+    let afterAction = profileReducer(profileState, addPostAC('23'))
     expect(afterAction.posts[1].message).toStrictEqual('testPost')
     expect(afterAction.posts.length).toBe(2)
 })
 
-test('should change new title', () => {
-    let newTitle = 'newTitle'
-    let afterAction = profileReducer(profileState, onChangePostAC(newTitle))
-    expect(afterAction.newTextForPost).toStrictEqual(newTitle)
-    expect(afterAction.newTextForPost).toBeDefined()
-})

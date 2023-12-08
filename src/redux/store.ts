@@ -43,16 +43,13 @@ type T_ChangeNewTextAC = {
 }
 
 type T_AddNewMessageAC = {
-    type: "ADD_NEW_MESSAGE"
-}
-
-type T_ChangeTitleNewMessageAC = {
-    type: "CHANGE_NEW_TITLE_MESSAGE",
-    text: string
+    type: "ADD_NEW_MESSAGE",
+    newMessageTitle: string
 }
 
 
-export type T_MainActionType = T_AddPostAC | T_ChangeNewTextAC | T_AddNewMessageAC | T_ChangeTitleNewMessageAC
+
+export type T_MainActionType = T_AddPostAC | T_ChangeNewTextAC | T_AddNewMessageAC
 
 export type T_StoreObject = {
     _state: T_StateObject,

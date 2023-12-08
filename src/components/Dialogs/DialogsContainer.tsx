@@ -1,8 +1,7 @@
-import {addMessageAC, changeMessageTitleAC} from "../../redux/reducers/dialogReducer";
+import {addMessageAC,} from "../../redux/reducers/dialogReducer";
 import {AppDispatch, RootState} from "../../redux/reduxStore";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {withAuthRedirectHOC} from "../../hoc/AuthRedirectHOC";
 import {compose} from "redux";
 import React from "react";
 
@@ -13,12 +12,9 @@ const mapStateToProps = (state: RootState) => {
 }
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        addMessageHandler: () => {
-            dispatch(addMessageAC())
+        addMessageHandler: (newMessageTitle:string) => {
+            dispatch(addMessageAC(newMessageTitle))
         },
-        onChangeDialogHandler: (text: string) => {
-            dispatch(changeMessageTitleAC(text))
-        }
     }
 }
 

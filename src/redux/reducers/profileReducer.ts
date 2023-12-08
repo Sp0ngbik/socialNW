@@ -27,22 +27,19 @@ export type T_UserProfileBody = {
 export type T_ProfileReducer = {
     profile: T_UserProfileBody | null,
     userId: number | null,
-    newTextForPost: string,
     posts: T_PostData[],
     status: string | null
 }
 
 type T_AddPostAC = ReturnType<typeof addPostAC>
-type T_ChangePostTitleAC = ReturnType<typeof onChangePostAC>
 type T_SetProfileBody = ReturnType<typeof setUserProfile>
 type T_SetUserStatus = ReturnType<typeof setUserStatus>
-type T_MainProfile = T_AddPostAC | T_ChangePostTitleAC | T_SetProfileBody | T_SetUserStatus
+type T_MainProfile = T_AddPostAC | T_SetProfileBody | T_SetUserStatus
 
 
 let initialState: T_ProfileReducer = {
     profile: null,
     userId: null,
-    newTextForPost: '3',
     posts: [
         {id: 1, message: 'Hello,fellow', likesCount: 3},
         {id: 2, message: 'Welcome bro', likesCount: 5},
@@ -55,12 +52,11 @@ export const profileReducer = (state = initialState, action: T_MainProfile) => {
         case "ADD_POST":
             let newPost = {
                 id: state.posts.length + 1,
-                message: state.newTextForPost,
+                message: action.newPostText,
                 likesCount: 0
             };
-            return {...state, posts: [newPost, ...state.posts], newTextForPost: ''}
-        case 'CHANGE_POST_VALUE':
-            return {...state, newTextForPost: action.text}
+            return {...state, posts: [newPost, ...state.posts]}
+
         case "SET_USER_PROFILE": {
             return {...state, profile: action.userBody}
         }
@@ -71,9 +67,8 @@ export const profileReducer = (state = initialState, action: T_MainProfile) => {
             return state
     }
 }
-export const addPostAC = () => ({type: 'ADD_POST'} as const)
+export const addPostAC = (newPostText: string) => ({type: 'ADD_POST',newPostText} as const)
 
-export const onChangePostAC = (text: string) => ({type: "CHANGE_POST_VALUE", text} as const)
 
 export const setUserProfile = (userBody: T_UserProfileBody) => {
     return {type: 'SET_USER_PROFILE', userBody} as const
@@ -90,7 +85,6 @@ export const setUserProfileTC = (userId: string = '30114') => (dispatch: AppDisp
             dispatch(toggleLoader(false));
         })
 }
-
 export const setUserStatusTC = (userId: string = '30114') => (dispatch: AppDispatch) => {
     dispatch(toggleLoader(true))
     api_profile.getStatus(userId).then(res => {
