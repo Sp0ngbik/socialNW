@@ -10,6 +10,11 @@ const AddPostMessage: React.FC<T_AppPostMessage> = ({addPostAC}) => {
         initialValues: {
             postMessage: ''
         },
+        validate: (values) => {
+            if (values.postMessage.length < 1) {
+               return {postMessage:'Must be a text'}
+            }
+        },
         onSubmit: (values) => {
             addPostAC(values.postMessage)
             formikPosts.resetForm()
@@ -17,10 +22,14 @@ const AddPostMessage: React.FC<T_AppPostMessage> = ({addPostAC}) => {
     })
     return (
         <form onSubmit={formikPosts.handleSubmit}>
-               <textarea
-                   {...formikPosts.getFieldProps('postMessage')}
-               />
-            <button type='submit'>Add post
+
+            {formikPosts.errors.postMessage && formikPosts.touched.postMessage &&
+                <div>{formikPosts.errors.postMessage}</div>}
+            <textarea
+                {...formikPosts.getFieldProps('postMessage')}
+            />
+            <button disabled={!!formikPosts.errors.postMessage} type='submit'>
+                Add post
             </button>
         </form>
     );

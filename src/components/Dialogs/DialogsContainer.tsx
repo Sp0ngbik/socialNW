@@ -4,6 +4,7 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import React from "react";
+import {withAuthRedirectHOC} from "../../hoc/AuthRedirectHOC";
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -12,13 +13,13 @@ const mapStateToProps = (state: RootState) => {
 }
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        addMessageHandler: (newMessageTitle:string) => {
+        addMessageHandler: (newMessageTitle: string) => {
             dispatch(addMessageAC(newMessageTitle))
         },
     }
 }
 
 export default compose<React.ComponentType>(
-    // withAuthRedirectHOC,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirectHOC,
 )(Dialogs)

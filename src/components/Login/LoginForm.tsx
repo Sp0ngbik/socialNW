@@ -1,55 +1,60 @@
 import React from 'react';
 import {useFormik} from "formik";
+import {Navigate} from "react-router-dom";
+import {T_LoginProps} from "./Login";
 
-type T_LoginForm = {
-    login: string,
+export type T_LoginForm = {
+    email: string,
     password: string,
     rememberMe: boolean
 }
 
-class FormikErrorType {
-}
 
-const LoginForm = () => {
-    const formik = useFormik({
+const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth}) => {
+    const formikLogin = useFormik({
         initialValues: {
-            login: '',
+            email: '',
             password: '',
             rememberMe: false
         },
         validate: (values) => {
-            // const errors: FormikErrorType = {}
-            // if (!values.email) {
-            //     errors.email = 'Required'
-            // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            //     errors.email = 'Invalid email address'
-            // }
-            // if (!values.password) {
-            //     errors.password = 'Required'
-            // }
-            // return errors
+            if (!values.email) {
+                return {email: 'Required'}
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                return {email: 'Invalid email address'}
+            }
+            if (!values.password) {
+                return {password: 'Password required'}
+            }
         },
         onSubmit: (values: T_LoginForm) => {
-            console.log(values)
+            setLoginUserTC(values)
+            formikLogin.resetForm()
         }
     })
+    if (isAuth) {
+        return <Navigate to={'/profile'}/>
+    }
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formikLogin.handleSubmit}>
             <div>
-                <input placeholder='login'
-                       {...formik.getFieldProps('login')} />
+                {formikLogin.errors.email && formikLogin.touched.email && <div>{formikLogin.errors.email}</div>}
+                <input placeholder='Email'
+                       {...formikLogin.getFieldProps('email')} />
             </div>
             <div>
-                <input placeholder='Password'
-                       {...formik.getFieldProps('password')}/>
+                {formikLogin.errors.password && formikLogin.touched.password &&
+                    <div>{formikLogin.errors.password}</div>}
+                <input placeholder='Password' type='password'
+                       {...formikLogin.getFieldProps('password')}/>
             </div>
             <div>
                 <input
                     id={'rememberMe'}
-                    checked={formik.values.rememberMe}
+                    checked={formikLogin.values.rememberMe}
                     placeholder='rememberMe'
                     type={'checkbox'}
-                    {...formik.getFieldProps('rememberMe')}
+                    {...formikLogin.getFieldProps('rememberMe')}
                 />Remember me
             </div>
             <div>

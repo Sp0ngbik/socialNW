@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
 import {
-    setAuthUserTC,
+    setAuthUserTC, setLogOutUserTC,
     T_AuthReducerInitial,
 } from "../../redux/reducers/authReducer";
 import {RootState} from "../../redux/reduxStore";
@@ -10,6 +10,7 @@ import {RootState} from "../../redux/reduxStore";
 
 export type T_HeaderContainer = {
     setAuthUserTC: () => void
+    setLogOutUserTC: () => void
     authUserState: T_AuthReducerInitial
 }
 
@@ -32,4 +33,4 @@ const mapStateToProps = (state: RootState) => {
 }
 
 
-export default connect(mapStateToProps, {setAuthUserTC})(HeaderContainer);
+export default connect(mapStateToProps, {setAuthUserTC, setLogOutUserTC})(HeaderContainer);

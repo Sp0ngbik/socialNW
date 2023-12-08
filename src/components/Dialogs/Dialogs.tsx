@@ -11,8 +11,7 @@ type T_Dialog = {
         dialogsData: T_UserDialog[],
         messageData: T_Message[],
     }
-    isAuth: boolean
-    addMessageHandler: (newMessageTitle:string) => void
+    addMessageHandler: (newMessageTitle: string) => void
 }
 
 const Dialogs = (props: T_Dialog) => {

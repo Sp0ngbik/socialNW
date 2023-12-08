@@ -9,6 +9,13 @@ const AddDialogMessage: FC<T_AddDialogMessage> = ({addMessage}) => {
         initialValues: {
             messageText: ''
         },
+        validate: (values) => {
+            if (values.messageText.length < 1) {
+                return {messageText: 'Must be a text'}
+            }else if(values.messageText.length>30){
+                return {messageText:'Message must be lower then 30 symb'}
+            }
+        },
         onSubmit: (values) => {
             addMessage(values.messageText)
             formikDialog.resetForm()
@@ -16,8 +23,10 @@ const AddDialogMessage: FC<T_AddDialogMessage> = ({addMessage}) => {
     })
     return (
         <form onSubmit={formikDialog.handleSubmit}>
+            {formikDialog.errors.messageText  &&
+                <div>{formikDialog.errors.messageText}</div>}
             <textarea {...formikDialog.getFieldProps('messageText')}/>
-            <button type={'submit'}>
+            <button disabled={!!formikDialog.errors.messageText} type={'submit'}>
                 Отправить
             </button>
         </form>

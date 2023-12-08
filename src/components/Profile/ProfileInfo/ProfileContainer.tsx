@@ -44,6 +44,6 @@ const mapDispatchProps = {
 }
 
 export default compose<React.ComponentType>(
-    // withAuthRedirectHOC,
+    withAuthRedirectHOC,
     connect(mapStateProps, mapDispatchProps))(ProfileContainer)
 
