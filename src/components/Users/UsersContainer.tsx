@@ -5,6 +5,7 @@ import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
+import {getActivePage, getIsFetching, getPageSize, getUsers} from "../../redux/selectors/user_selector";
 
 export type T_UsersContainerProps = {
     usersPage: T_UsersBody[],
@@ -54,15 +55,22 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
 }
 
 
+// let mapStateToProps = (state: RootState) => {
+//     return {
+//         usersPage: state.usersPage.items,
+//         pageSize: state.usersPage.pageSize,
+//         activePage: state.usersPage.activePage,
+//         isFetching: state.usersPage.isFetching,
+//     }
+// }
 let mapStateToProps = (state: RootState) => {
     return {
-        usersPage: state.usersPage.items,
-        pageSize: state.usersPage.pageSize,
-        activePage: state.usersPage.activePage,
-        isFetching: state.usersPage.isFetching,
+        usersPage: getUsers(state),
+        pageSize: getPageSize(state),
+        activePage: getActivePage(state),
+        isFetching: getIsFetching(state),
     }
 }
-
 const mapDispatch = {
     getUsersTC,
     followUserTC,

@@ -12,14 +12,11 @@ type T_UsersProps = {
 
 export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
                                                                     usersPage,
-                                                                    // pageSize,
-                                                                    // totalCount,
                                                                     activePage,
                                                                     onPageChanged,
                                                                     followHandler,
                                                                     unFollowHandler,
                                                                 }) => {
-    // let pagesCount = Math.ceil(totalCount / pageSize)
     let pages: number[] = []
     for (let i = 1; i < 10; i++) {
         pages.push(i)
