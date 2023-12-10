@@ -10,12 +10,13 @@ export type T_LoginForm = {
 }
 
 
-const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth}) => {
+const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth, loginError}) => {
     const formikLogin = useFormik({
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+            mainField: ''
         },
         validate: (values) => {
             if (!values.email) {
@@ -27,9 +28,12 @@ const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth}) => {
                 return {password: 'Password required'}
             }
         },
-        onSubmit: (values: T_LoginForm) => {
-            setLoginUserTC(values)
-            formikLogin.resetForm()
+        onSubmit: async (values: T_LoginForm, formikHelpers) => {
+            const response = await setLoginUserTC(values);
+
+            if (response.data.messages) {
+                formikHelpers.setFieldError('mainField', response.data.messages[0]);
+            }
         }
     })
     if (isAuth) {
@@ -57,6 +61,7 @@ const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth}) => {
                     {...formikLogin.getFieldProps('rememberMe')}
                 />Remember me
             </div>
+            {formikLogin.errors.mainField && <div>{formikLogin.errors.mainField}</div>}
             <div>
                 <button type='submit'>Send</button>
             </div>

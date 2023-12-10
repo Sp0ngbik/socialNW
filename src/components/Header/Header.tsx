@@ -9,7 +9,7 @@ const Header: FC<T_HeaderContainer> = ({authUserState,setLogOutUserTC}) => {
         <img alt={'logo nf'} src='https://www.freelogodesign.org/Content/img/logo-ex-7.png'/>
         <div className={s.login_block}>
             {authUserState.isAuth ? <div>
-                <button onClick={setLogOutUserTC}>{authUserState.login}</button>
+              <span>{authUserState.login}</span>  <button onClick={setLogOutUserTC}>Logout</button>
             </div> : <NavLink to={'/login'}>Login</NavLink>}
         </div>
     </header>

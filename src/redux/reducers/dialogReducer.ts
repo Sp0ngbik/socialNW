@@ -19,7 +19,7 @@ const initialState = {
         {id: 4, message: 'Again'},
     ],
 }
-export const dialogReducer = (state: T_DialogState = initialState, action: T_MainActionType) => {
+export const dialogReducer = (state: T_DialogState = initialState, action: T_MainActionType):T_DialogState => {
     switch (action.type) {
         case 'ADD_NEW_MESSAGE':
             const newMessage = {

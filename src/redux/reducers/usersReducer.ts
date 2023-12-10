@@ -68,7 +68,7 @@ export type T_MainUsersAction =
     | T_ToggleLoaderAC
     | T_ToggleFollowAC
 
-export const usersReducer = (state = initialState, action: T_MainUsersAction) => {
+export const usersReducer = (state = initialState, action: T_MainUsersAction): T_GetUsers => {
     switch (action.type) {
         case "FOLLOW_ACTION": {
             return {
@@ -83,9 +83,8 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
         case "SET_USERS": {
             return {
                 ...state,
-                items: action.users.items,
+                items: action.users.items.map(el => ({...el, followingInProgress: false})),
                 totalCount: action.users.totalCount,
-                followingInProgress: false
             }
         }
         case "CHANGE_ACTIVE_PAGE": {
@@ -101,7 +100,7 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction) =>
             }
         }
         case "SWITCH_LOADER": {
-            return {...state, isLoading: action.loaderStatus}
+            return {...state, isFetching: action.loaderStatus}
         }
         default:
             return state

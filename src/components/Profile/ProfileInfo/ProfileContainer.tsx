@@ -8,9 +8,8 @@ import {
 } from "../../../redux/reducers/profileReducer";
 import React, {FC, useEffect} from "react";
 import Profile from "../Profile";
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks/hooks";
-import {withAuthRedirectHOC} from "../../../hoc/AuthRedirectHOC";
 import {compose} from "redux";
 
 export type T_ProfileProps = {
@@ -18,22 +17,32 @@ export type T_ProfileProps = {
     userProfile: T_UserProfileBody | null,
     updateUserStatusTC: (status: string) => void
     status: string
+    isAuth: boolean
 }
 const ProfileContainer: FC<T_ProfileProps> = (props) => {
     const params = useParams<{ id: string }>()
     let userId = params.id
     const dispatch = useAppDispatch()
+
     useEffect(() => {
+
         dispatch(setUserProfileTC(userId))
         dispatch(setUserStatusTC(userId))
     }, [userId, dispatch]);
+
+
+    if (!userId && !props.isAuth) {
+        return <Navigate to={'/login'}/>
+    }
+
     return <Profile {...props}/>
 }
 
 const mapStateProps = (state: RootState) => {
     return {
         userProfile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        isAuth: state.authReducer.isAuth
     }
 }
 
@@ -44,6 +53,5 @@ const mapDispatchProps = {
 }
 
 export default compose<React.ComponentType>(
-    withAuthRedirectHOC,
     connect(mapStateProps, mapDispatchProps))(ProfileContainer)
 

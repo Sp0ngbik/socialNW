@@ -4,13 +4,15 @@ import {NavLink} from "react-router-dom";
 import {T_Friend} from "../../redux/store";
 
 type T_NavaBarPage = {
-    friends: T_Friend[]
+    friends: T_Friend[],
+    isAuth: boolean
 }
 
-const Navbar: FC<T_NavaBarPage> = ({friends}) => {
+const Navbar: FC<T_NavaBarPage> = ({friends, isAuth}) => {
     return <nav className={s.nav}>
         <div className={s.item}>
-            <NavLink className={({isActive}) => isActive ? s.active : ''} to={'/profile'}>Profile</NavLink>
+            <NavLink className={({isActive}) => isActive ? s.active : ''}
+                     to={isAuth ? '/profile' : '/login'}>Profile</NavLink>
         </div>
         <div className={`${s.item} ${s.active}`}>
             <NavLink className={({isActive}) => isActive ? s.active : ''} to={"/dialogs"}>Messages</NavLink>

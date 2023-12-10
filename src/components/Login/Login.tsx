@@ -3,10 +3,13 @@ import LoginForm, {T_LoginForm} from "./LoginForm";
 import {connect} from "react-redux";
 import {setLoginUserTC} from "../../redux/reducers/authReducer";
 import {RootState} from "../../redux/reduxStore";
+import {AxiosResponse} from "axios";
+import {T_ResponseLogin} from "../../api/api_header";
 
 export type T_LoginProps = {
-    setLoginUserTC: (data: T_LoginForm) => void
-    isAuth: boolean
+    setLoginUserTC: (data: T_LoginForm) => Promise<AxiosResponse<T_ResponseLogin>>
+    isAuth: boolean,
+    loginError: string
 }
 
 const Login: React.FC<T_LoginProps> = (props) => {
@@ -19,7 +22,8 @@ const Login: React.FC<T_LoginProps> = (props) => {
 };
 const mapStateToProps = (state: RootState) => {
     return {
-        isAuth: state.authReducer.isAuth
+        isAuth: state.authReducer.isAuth,
+        loginError: state.authReducer.loginError
     }
 }
 export default connect(mapStateToProps, {setLoginUserTC})(Login);

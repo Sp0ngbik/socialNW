@@ -1,16 +1,10 @@
 import {connect} from "react-redux";
 import {RootState} from "../../redux/reduxStore";
-import {
-    followUserTC,
-    getUsersTC,
-    T_UsersBody,
-    unfollowUseTC
-} from "../../redux/reducers/usersReducer";
+import {followUserTC, getUsersTC, T_UsersBody, unfollowUseTC} from "../../redux/reducers/usersReducer";
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
-import {withAuthRedirectHOC} from "../../hoc/AuthRedirectHOC";
 
 export type T_UsersContainerProps = {
     usersPage: T_UsersBody[],
@@ -74,11 +68,8 @@ const mapDispatch = {
     followUserTC,
     unfollowUseTC
 }
-// export default connect(mapStateToProps,
-//     mapDispatch
-// )(UsersContainer)
+
 
 export default compose<React.ComponentType>(
-    withAuthRedirectHOC,
     connect(mapStateToProps, mapDispatch),
 )(UsersContainer)

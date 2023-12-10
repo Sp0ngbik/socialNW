@@ -47,7 +47,7 @@ let initialState: T_ProfileReducer = {
     status: null
 }
 
-export const profileReducer = (state = initialState, action: T_MainProfile) => {
+export const profileReducer = (state = initialState, action: T_MainProfile): T_ProfileReducer => {
     switch (action.type) {
         case "ADD_POST":
             let newPost = {
@@ -67,7 +67,7 @@ export const profileReducer = (state = initialState, action: T_MainProfile) => {
             return state
     }
 }
-export const addPostAC = (newPostText: string) => ({type: 'ADD_POST',newPostText} as const)
+export const addPostAC = (newPostText: string) => ({type: 'ADD_POST', newPostText} as const)
 
 
 export const setUserProfile = (userBody: T_UserProfileBody) => {

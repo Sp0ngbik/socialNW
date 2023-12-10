@@ -4,7 +4,8 @@ import {RootState} from "../../redux/reduxStore";
 
 const mapStateToProps = (state: RootState) => {
     return {
-        friends: state.sidebar.friends
+        friends: state.sidebar.friends,
+        isAuth: state.authReducer.isAuth
     }
 }
 
