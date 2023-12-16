@@ -25,7 +25,6 @@ const ProfileContainer: FC<T_ProfileProps> = (props) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-
         dispatch(setUserProfileTC(userId))
         dispatch(setUserStatusTC(userId))
     }, [userId, dispatch]);
