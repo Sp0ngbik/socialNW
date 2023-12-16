@@ -59,6 +59,7 @@ type T_UnFollowAC = ReturnType<typeof unFollow>
 type T_ToggleLoaderAC = ReturnType<typeof toggleLoader>
 type T_ChangeActivePageAC = ReturnType<typeof setActivePage>
 type T_ToggleFollowAC = ReturnType<typeof toggleFollowedLoader>
+type T_FAKE = ReturnType<typeof fakeAC>
 
 export type T_MainUsersAction =
     T_FollowAC
@@ -67,9 +68,13 @@ export type T_MainUsersAction =
     | T_ChangeActivePageAC
     | T_ToggleLoaderAC
     | T_ToggleFollowAC
+    | T_FAKE
 
 export const usersReducer = (state = initialState, action: T_MainUsersAction): T_GetUsers => {
     switch (action.type) {
+        case "FAKE_ACTION": {
+            return {...state, isFetching: !state.isFetching}
+        }
         case "FOLLOW_ACTION": {
             return {
                 ...state,
@@ -105,6 +110,10 @@ export const usersReducer = (state = initialState, action: T_MainUsersAction): T
         default:
             return state
     }
+}
+
+export const fakeAC = () => {
+    return {type: 'FAKE_ACTION'} as const
 }
 
 export const getUsersTC = (pageSize: number, activePage: number) => async (dispatch: AppDispatch) => {
