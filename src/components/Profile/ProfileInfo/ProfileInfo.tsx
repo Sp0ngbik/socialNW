@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {T_UserProfileBody} from "../../../redux/reducers/profileReducer";
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from './ProfileStatus'
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 type T_ProfileInfoProps = {
     updateUserStatus: (status: string) => void
@@ -24,7 +24,8 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, status,updateUserStatus})
             <div>
                 <h3>{profile.fullName}</h3>
                 <img src={profile.photos.large || profile.photos.small || ''} alt={'ava not found'}/>
-                <ProfileStatus updateUserStatus={updateUserStatus} status={status}/>
+                {/*<ProfileStatus updateUserStatus={updateUserStatus} status={status}/>*/}
+                <ProfileStatusWithHooks updateUserStatus={updateUserStatus} status={status}/>
             </div>
 
         </div>

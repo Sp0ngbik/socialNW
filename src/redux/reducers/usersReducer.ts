@@ -17,8 +17,9 @@ export type T_GetUsers = {
     items: T_UsersBody[]
     pageSize: number,
     totalCount: number,
-    activePage: number
-    isFetching: boolean
+    activePage: number,
+    isFetching: boolean,
+    fake: number
 }
 
 
@@ -28,6 +29,7 @@ const initialState: T_GetUsers = {
     totalCount: 0,
     activePage: 1,
     isFetching: false,
+    fake: 10
 }
 
 export const follow = (userId: number) => {
@@ -73,7 +75,7 @@ export type T_MainUsersAction =
 export const usersReducer = (state = initialState, action: T_MainUsersAction): T_GetUsers => {
     switch (action.type) {
         case "FAKE_ACTION": {
-            return {...state, isFetching: !state.isFetching}
+            return {...state, fake: state.fake + 1}
         }
         case "FOLLOW_ACTION": {
             return {
