@@ -1,7 +1,8 @@
 import MyPosts from "./MyPosts";
-import { RootState} from "../../../redux/reduxStore";
+import {RootState} from "../../../redux/reduxStore";
 import {connect} from "react-redux";
 import {addPostAC} from "../../../redux/reducers/profileReducer";
+import {compose} from "redux";
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -9,8 +10,8 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-const mapDispatchToProps ={
+const mapDispatchToProps = {
     addPostAC
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+export const MyPostsContainer = compose(connect(mapStateToProps, mapDispatchToProps))(MyPosts);

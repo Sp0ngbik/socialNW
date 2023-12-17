@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import {T_PostData} from "../../../redux/store";
 import AddPostMessage from "../../../helpers/AddPostMessage";
@@ -13,8 +13,9 @@ type T_MyPosts = {
 }
 
 
-const MyPosts: FC<T_MyPosts> = ({profilePage, addPostAC}) => {
-
+const MyPosts = (props: T_MyPosts) => {
+    console.log("RENDER")
+    let {profilePage, addPostAC} = props;
     return (
         <div>
             My posts
@@ -28,4 +29,4 @@ const MyPosts: FC<T_MyPosts> = ({profilePage, addPostAC}) => {
     )
 }
 
-export default MyPosts;
+export default React.memo(MyPosts);
