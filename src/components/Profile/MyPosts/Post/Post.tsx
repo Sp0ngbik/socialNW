@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import s from './Post.module.css';
+import s from './Post.module.scss';
 
 type T_Post = {
     message: string;
@@ -10,11 +10,13 @@ const Post: FC<T_Post> = (props) => {
 
     return (
         <div className={s.item}>
-            <img alt={'ava not found'}
-                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMx6nyE6BtBUpxyikA6w1afyKRpCc1M38QrA&usqp=CAU'/>
-            {props.message}
             <div>
-                <span>like</span> {props.likesCount}
+                <img alt={'ava not found'}
+                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMx6nyE6BtBUpxyikA6w1afyKRpCc1M38QrA&usqp=CAU'/>
+            {props.message}
+            </div>
+            <div>
+                <span>like {props.likesCount}</span>
             </div>
         </div>
     )

@@ -1,0 +1,41 @@
+.header {
+  grid-area: h;
+  background-color: #06193e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.login_block {
+  color: #ffffff;
+  font-size: 25px;
+  margin: 0 40px 0 0;
+
+  & button {
+    border-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #0cf304;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+  }
+
+  & a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  & span {
+    margin: 0 40px 5px 0
+  }
+
+
+
+  & div {
+    display: flex;
+    align-items: center;
+  }
+}
+

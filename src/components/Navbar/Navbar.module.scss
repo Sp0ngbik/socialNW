@@ -1,0 +1,37 @@
+.nav {
+  padding: 20px;
+  grid-area: n;
+  background-color: burlywood;
+}
+
+.item {
+  padding: 10px;
+  font-size: 20px;
+  & a {
+    color: white;
+    text-decoration: none;
+  }
+  & .active {
+    color: gold;
+  }
+}
+
+.friendsBlock {
+  align-items: center;
+  width: 80%;
+  & img{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+}
+
+.friendInfo {
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  justify-items: center;
+}

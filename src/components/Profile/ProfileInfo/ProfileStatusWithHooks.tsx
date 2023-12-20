@@ -1,4 +1,5 @@
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
+import s from '../Profile.module.scss'
 
 type T_ProfileStatus = {
     status: string,
@@ -6,7 +7,7 @@ type T_ProfileStatus = {
 
 }
 
-const ProfileStatusWithHooks:FC<T_ProfileStatus> = (props) => {
+const ProfileStatusWithHooks: FC<T_ProfileStatus> = (props) => {
     const [editMode, setEditMode] = useState(false)
     const [status, setStatus] = useState(props.status)
     useEffect(() => {
@@ -26,7 +27,7 @@ const ProfileStatusWithHooks:FC<T_ProfileStatus> = (props) => {
     }
 
     return (
-        <>
+        <div className={s.statusBlock}>
             {editMode ?
                 <div>
                     <input
@@ -36,11 +37,11 @@ const ProfileStatusWithHooks:FC<T_ProfileStatus> = (props) => {
                         onBlur={deactivateEditModeHandler}/>
                 </div> : <div>
                 <span onDoubleClick={activateEditModeHandler}>
-                    {status || 'No status'}
+                  Status: {status || 'No status'}
                 </span>
                 </div>}
 
-        </>
+        </div>
     );
 };
 

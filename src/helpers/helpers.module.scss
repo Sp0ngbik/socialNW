@@ -1,0 +1,11 @@
+.addPostBlock {
+  display: flex;
+  margin: 20px 0;
+
+  & textarea {
+    font-size: 25px;
+    width: 200px;
+    resize: none;
+    height: 40px;
+  }
+}

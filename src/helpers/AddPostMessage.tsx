@@ -1,5 +1,6 @@
 import React from 'react';
 import {useFormik} from "formik";
+import s from './helpers.module.scss'
 
 type T_AppPostMessage = {
     addPostAC: (postMessage: string) => void
@@ -12,7 +13,7 @@ const AddPostMessage: React.FC<T_AppPostMessage> = ({addPostAC}) => {
         },
         validate: (values) => {
             if (values.postMessage.length < 1) {
-               return {postMessage:'Must be a text'}
+                return {postMessage: 'Must be a text'}
             }
         },
         onSubmit: (values) => {
@@ -21,8 +22,7 @@ const AddPostMessage: React.FC<T_AppPostMessage> = ({addPostAC}) => {
         }
     })
     return (
-        <form onSubmit={formikPosts.handleSubmit}>
-
+        <form onSubmit={formikPosts.handleSubmit} className={s.addPostBlock}>
             {formikPosts.errors.postMessage && formikPosts.touched.postMessage &&
                 <div>{formikPosts.errors.postMessage}</div>}
             <textarea

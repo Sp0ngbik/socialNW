@@ -1,0 +1,26 @@
+.myPostsBlock {
+  display: flex;
+  flex-direction: column;
+
+  & > span {
+    font-size: 25px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  & .posts_messages {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+
+    & div {
+      margin: 10px 0;
+
+      & span {
+        font-size: 25px;
+      }
+    }
+  }
+}

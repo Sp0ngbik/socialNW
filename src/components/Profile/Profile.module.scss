@@ -1,0 +1,34 @@
+.profile_content {
+  grid-area: c;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileInfo {
+  text-align: center;
+  align-items: center;
+
+  & img {
+    border-radius: 10px;
+    width: 140px;
+  }
+
+  & h3 {
+    font-size: 25px;
+  }
+}
+
+.statusBlock {
+  & span {
+    font-size: 25px;
+  }
+
+  & input {
+    width: 200px;
+    height: 40px;
+    font-size: 25px;
+  }
+}

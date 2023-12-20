@@ -1,16 +1,17 @@
 import React, {FC} from 'react';
-import s from './Header.module.css';
+import s from './Header.module.scss';
 import {NavLink} from "react-router-dom";
 import {T_HeaderContainer} from "./HeaderContainer";
 
-const Header: FC<T_HeaderContainer> = ({authUserState,setLogOutUserTC}) => {
+const Header: FC<T_HeaderContainer> = ({authUserState, setLogOutUserTC}) => {
 
     return <header className={s.header}>
-        <img alt={'logo nf'} src='https://www.freelogodesign.org/Content/img/logo-ex-7.png'/>
         <div className={s.login_block}>
             {authUserState.isAuth ? <div>
-              <span>{authUserState.login}</span>  <button onClick={setLogOutUserTC}>Logout</button>
-            </div> : <NavLink to={'/login'}>Login</NavLink>}
+                    <span>{authUserState.login}</span>
+                    <button onClick={setLogOutUserTC}>Logout</button>
+                </div> :
+                <button><NavLink to={'/login'}>Login</NavLink></button>}
         </div>
     </header>
 }
