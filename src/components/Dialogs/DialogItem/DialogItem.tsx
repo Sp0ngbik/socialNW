@@ -1,5 +1,5 @@
 import {NavLink} from "react-router-dom";
-import s from "../dialogs.module.css";
+import s from "../dialogs.module.scss";
 import React from "react";
 import {T_UserDialog} from "../../../redux/store";
 
