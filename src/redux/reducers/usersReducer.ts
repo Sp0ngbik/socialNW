@@ -22,7 +22,6 @@ export type T_GetUsers = {
     totalCount: number,
     activePage: number,
     isFetching: boolean,
-    fake: number
 }
 
 
@@ -32,7 +31,6 @@ const initialState: T_GetUsers = {
     totalCount: 0,
     activePage: 1,
     isFetching: false,
-    fake: 10
 }
 
 export const follow = (userId: number) => {

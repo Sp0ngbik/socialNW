@@ -6,6 +6,7 @@ import {usersReducer} from "./reducers/usersReducer";
 import {auth_reducer} from "./reducers/authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {app_Reducer} from "./reducers/appReducer";
+import {composeWithDevTools} from "@redux-devtools/extension";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -13,13 +14,15 @@ let rootReducer = combineReducers({
     sidebar: sideBarReducer,
     usersPage: usersReducer,
     authReducer: auth_reducer,
-    appReducer: app_Reducer
+    appReducer: app_Reducer,
 })
-export const reduxStore = legacy_createStore(rootReducer, applyMiddleware(thunk))
+//https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
+//yarn add @redux-devtools/extension
+
+export const reduxStore = legacy_createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 export type RootState = ReturnType<typeof reduxStore.getState>
 export type AppDispatch = typeof reduxStore.dispatch
 export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>
 export type AppThunk = ThunkAction<void, RootState, unknown, AnyAction>
-// @ts-ignore
-window.store = reduxStore
+
