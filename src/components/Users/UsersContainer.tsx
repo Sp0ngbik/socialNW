@@ -35,7 +35,6 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
     }
 
     render() {
-        // console.log('RENDER')
         const {isFetching} = this.props
         return (
             <>
@@ -57,9 +56,7 @@ class UsersContainer extends React.Component<T_UsersContainerProps> {
 
 
 let mapStateToProps = (state: RootState) => {
-    // console.log('MAP RENDER')
     return {
-        // usersPage: getUsers(state),
         usersPage: getUsersSuper(state),
         pageSize: getPageSize(state),
         activePage: getActivePage(state),

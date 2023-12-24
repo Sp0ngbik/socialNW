@@ -1,5 +1,5 @@
 import {AppDispatch, AppThunk, AppThunkDispatch} from "../reduxStore";
-import {api_header} from "../../api/api_header";
+import {Api_header} from "../../api/api_header";
 import {T_LoginForm} from "../../components/Login/LoginForm";
 
 export type T_AuthReducerInitial = {
@@ -30,13 +30,13 @@ type T_MainType = T_SetUserData | T_SetUserLogOut | T_SetErrorText
 
 export const auth_reducer = (state = initialState, action: T_MainType): T_AuthReducerInitial => {
     switch (action.type) {
-        case "SET_USER_DATA": {
+        case "auth/SET_USER_DATA": {
             return {...state, ...action.userData, isAuth: true}
         }
-        case "SET_USER_LOGOUT": {
+        case "auth/SET_USER_LOGOUT": {
             return {...state, login: '', email: '', id: 0, isAuth: false}
         }
-        case "SET_LOGIN_ERROR": {
+        case "auth/SET_LOGIN_ERROR": {
             return {...state, loginError: action.errorText[0]}
         }
         default:
@@ -45,20 +45,20 @@ export const auth_reducer = (state = initialState, action: T_MainType): T_AuthRe
 }
 
 const setLoginErrorAC = (errorText: string[]) => {
-    return {type: 'SET_LOGIN_ERROR', errorText} as const
+    return {type: 'auth/SET_LOGIN_ERROR', errorText} as const
 }
 
 
 export const setAuthUserDataAC = (userData: T_ResponseAuthUser) => {
-    return {type: "SET_USER_DATA", userData} as const
+    return {type: "auth/SET_USER_DATA", userData} as const
 }
 
 export const setLogOutUserDataAC = () => {
-    return {type: "SET_USER_LOGOUT"} as const
+    return {type: "auth/SET_USER_LOGOUT"} as const
 }
 
 export const setAuthUserTC = ():AppThunk => async (dispatch: AppDispatch) => {
-    const res = await api_header.authUser();
+    const res = await Api_header.authUser();
     if (res.data.resultCode === 0) {
         dispatch(setAuthUserDataAC(res.data.data));
     }
@@ -66,14 +66,14 @@ export const setAuthUserTC = ():AppThunk => async (dispatch: AppDispatch) => {
 
 }
 export const setLoginUserTC = (data: T_LoginForm) => async (dispatch:AppThunkDispatch) => {
-    const response = await api_header.loginUser(data)
+    const response = await Api_header.loginUser(data)
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserTC())
     }
     return response
 }
 export const setLogOutUserTC = () => (dispatch: AppDispatch) => {
-    api_header.logOutUser().then((res) => {
+    Api_header.logOutUser().then((res) => {
         if (res.data.resultCode === 0) {
             dispatch(setLogOutUserDataAC())
         }

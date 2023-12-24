@@ -18,14 +18,17 @@ export type T_ResponseLogin = {
     messages: string[]
     resultCode: number
 }
-export const api_header = {
-    authUser() {
+
+export class Api_header {
+    static authUser() {
         return instanceAxios.get<T_ResponseAuthMe>('auth/me')
-    },
-    loginUser(data: T_LoginForm) {
-        return instanceAxios.post<T_ResponseLogin,AxiosResponse<T_ResponseLogin>>('auth/login', data)
-    },
-    logOutUser() {
+    }
+
+    static loginUser(data: T_LoginForm) {
+        return instanceAxios.post<T_ResponseLogin, AxiosResponse<T_ResponseLogin>>('auth/login', data)
+    }
+
+    static logOutUser() {
         return instanceAxios.delete('auth/login')
     }
 }

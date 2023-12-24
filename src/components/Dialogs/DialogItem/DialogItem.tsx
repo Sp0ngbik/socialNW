@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import s from "../dialogs.module.scss";
 import React from "react";
-import {T_UserDialog} from "../../../redux/store";
+import {T_UserDialog} from "../../../redux/reducers/dialogReducer";
 
 
 const DialogItem = (props: T_UserDialog) => {

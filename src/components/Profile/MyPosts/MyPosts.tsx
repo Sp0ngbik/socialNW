@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
-import {T_PostData} from "../../../redux/store";
 import AddPostMessage from "../../../helpers/AddPostMessage";
 import Post from "./Post/Post";
+import {T_PostData} from "../../../redux/reducers/profileReducer";
 
 
 type T_MyPosts = {

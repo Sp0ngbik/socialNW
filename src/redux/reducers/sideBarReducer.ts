@@ -1,5 +1,6 @@
-import {T_Friend} from "../store";
-
+export type T_Friend = {
+    id: number, imageSrc: string
+}
 const initialState = {
     friends: [
         {

@@ -7,7 +7,6 @@ export const getUsers = (state: RootState) => {
 
 export const getUsersSuper = createSelector([getUsers],
     (users) => {
-        // debugger
         return users.filter(el => true)
     })
 

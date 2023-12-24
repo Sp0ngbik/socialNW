@@ -69,6 +69,5 @@ test('should change user status', () => {
     const action = setUserStatus(newStatus)
     const endState = profileReducer(state, action)
 
-
     expect(endState.status).toBe(newStatus)
 })

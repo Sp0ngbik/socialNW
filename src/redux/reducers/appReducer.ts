@@ -14,7 +14,7 @@ type T_MainAppReducer = T_InitializedApp
 
 export const app_Reducer = (state = initialState, action: T_MainAppReducer): T_AppReducer => {
     switch (action.type) {
-        case "INITIALIZED_APP": {
+        case "app/INITIALIZED_APP": {
             return {...state, appInitialized: true}
         }
         default:
@@ -24,7 +24,7 @@ export const app_Reducer = (state = initialState, action: T_MainAppReducer): T_A
 
 
 export const initializedAppAC = () => {
-    return {type: "INITIALIZED_APP"} as const
+    return {type: "app/INITIALIZED_APP"} as const
 }
 
 export const appInitializeTC = () => async (dispatch: AppDispatch) => {
