@@ -8,9 +8,9 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {appInitializeTC} from "./redux/reducers/appReducer";
-import {RootState} from "./redux/reduxStore";
+import {reduxStore, RootState} from "./redux/reduxStore";
 import Preloader from "./components/common/Preloader/Preloader";
 
 
@@ -31,19 +31,17 @@ class App extends React.Component<T_AppProps> {
         }
         return (
             <div className='app-wrapper'>
-                <BrowserRouter>
-                    <HeaderContainer/>
-                    <NavbarContainer/>
-                    <div className='app-wrapper-content'>
-                        <Routes>
-                            <Route path={'/*'} element={<News/>}/>
-                            <Route path={'/profile/:id?'} element={<ProfileContainer/>}/>
-                            <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
-                            <Route path={'/users'} element={<UsersContainer/>}/>
-                            <Route path={'/login'} element={<Login/>}/>
-                        </Routes>
-                    </div>
-                </BrowserRouter>
+                <HeaderContainer/>
+                <NavbarContainer/>
+                <div className='app-wrapper-content'>
+                    <Routes>
+                        <Route path={'/*'} element={<News/>}/>
+                        <Route path={'/profile/:id?'} element={<ProfileContainer/>}/>
+                        <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
+                        <Route path={'/users'} element={<UsersContainer/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                    </Routes>
+                </div>
             </div>
         );
     }
@@ -55,4 +53,14 @@ const mapStateToProps = (state: RootState) => {
         initialized: state.appReducer.appInitialized
     }
 }
-export default connect(mapStateToProps, {appInitializeTC})(App);
+const AppContainer = connect(mapStateToProps, {appInitializeTC})(App);
+
+const MainApp = () => {
+    return <BrowserRouter>
+        <Provider store={reduxStore}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default MainApp
