@@ -15,6 +15,7 @@ export type T_UsersContainerProps = {
     getUsersTC: (pageSize: number, activePage: number) => void
     followUserTC: (userId: number) => void
     unfollowUseTC: (userId: number) => void,
+    totalUsersCount:number
 }
 
 class UsersContainer extends React.Component<T_UsersContainerProps> {
@@ -61,6 +62,7 @@ let mapStateToProps = (state: RootState) => {
         pageSize: getPageSize(state),
         activePage: getActivePage(state),
         isFetching: getIsFetching(state),
+        totalUsersCount: state.usersPage.totalCount
     }
 }
 const mapDispatch = {

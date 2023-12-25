@@ -14,11 +14,11 @@ export const Users: FC<T_UsersProps & T_UsersContainerProps> = ({
                                                                     activePage,
                                                                     onPageChanged,
                                                                     followHandler,
-                                                                    unFollowHandler,
+                                                                    unFollowHandler,totalUsersCount
                                                                 }) => {
     return (
         <div>
-            <Paginator activePage={activePage} onPageChanged={onPageChanged}/>
+            <Paginator activePage={activePage} onPageChanged={onPageChanged} totalUsersCount={totalUsersCount}/>
             {usersPage.map(user =>
                 <User key={user.id} userBody={user} followHandler={followHandler} unFollowHandler={unFollowHandler}/>)}
         </div>

@@ -1,0 +1,24 @@
+.paginationBlock {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-evenly;
+
+  & .selectedPage {
+    background-color: #e5a74d;
+  }
+
+  & button {
+    font-size: 20px;
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid black;
+    transition: 0.3s linear;
+
+    &:hover {
+      background-color: #dfb46e;
+      cursor: pointer;
+    }
+  }
+}
+
