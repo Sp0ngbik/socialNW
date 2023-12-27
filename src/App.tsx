@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import './App.css';
 import News from "./components/News/News";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -63,11 +63,11 @@ const mapStateToProps = (state: RootState) => {
 }
 const AppContainer = connect(mapStateToProps, {appInitializeTC})(App);
 const MainApp = () => {
-    return <BrowserRouter basename={process.env.PUBLIC_URL}>
+    return <HashRouter basename={'/'}>
         <Provider store={reduxStore}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp
