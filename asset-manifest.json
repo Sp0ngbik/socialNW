@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/socialNW/static/css/main.211168c9.css",
-    "main.js": "/socialNW/static/js/main.c7118ea2.js",
+    "main.js": "/socialNW/static/js/main.caf0d08a.js",
     "static/css/829.3f7ec39c.chunk.css": "/socialNW/static/css/829.3f7ec39c.chunk.css",
     "static/js/829.7772434c.chunk.js": "/socialNW/static/js/829.7772434c.chunk.js",
     "static/css/101.609d42b5.chunk.css": "/socialNW/static/css/101.609d42b5.chunk.css",
@@ -10,7 +10,7 @@
     "static/media/Gear-0.4s-200px.svg": "/socialNW/static/media/Gear-0.4s-200px.df7c0dd929b1d4b6ba0190ca4e8c2ccd.svg",
     "index.html": "/socialNW/index.html",
     "main.211168c9.css.map": "/socialNW/static/css/main.211168c9.css.map",
-    "main.c7118ea2.js.map": "/socialNW/static/js/main.c7118ea2.js.map",
+    "main.caf0d08a.js.map": "/socialNW/static/js/main.caf0d08a.js.map",
     "829.3f7ec39c.chunk.css.map": "/socialNW/static/css/829.3f7ec39c.chunk.css.map",
     "829.7772434c.chunk.js.map": "/socialNW/static/js/829.7772434c.chunk.js.map",
     "101.609d42b5.chunk.css.map": "/socialNW/static/css/101.609d42b5.chunk.css.map",
@@ -18,6 +18,6 @@
   },
   "entrypoints": [
     "static/css/main.211168c9.css",
-    "static/js/main.c7118ea2.js"
+    "static/js/main.caf0d08a.js"
   ]
 }
