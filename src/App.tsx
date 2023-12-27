@@ -64,7 +64,7 @@ const mapStateToProps = (state: RootState) => {
 const AppContainer = connect(mapStateToProps, {appInitializeTC})(App);
 
 const MainApp = () => {
-    return <BrowserRouter>
+    return <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Provider store={reduxStore}>
             <AppContainer/>
         </Provider>
