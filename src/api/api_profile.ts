@@ -19,5 +19,9 @@ export class Api_profile {
     static updateStatus(status: string) {
         return instanceAxios.put<T_ProfileResponse>(`profile/status/`, {status})
     }
+
+    static savePhoto(file: File) {
+        return instanceAxios.put('/profile/photo', {image: file}, {headers: {'Content-Type': 'multipart/form-data'}})
+    }
 }
 

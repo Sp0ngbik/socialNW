@@ -4,10 +4,19 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {T_ProfileProps} from "./ProfileInfo/ProfileContainer"
 
-const Profile: FC<T_ProfileProps> = ({userProfile,status,updateUserStatusTC}) => {
+type T_Props = {
+    isOwner: boolean
+}
+
+const Profile: FC<T_ProfileProps & T_Props> = ({userProfile, saveUserPhotoTC, isOwner, status, updateUserStatusTC}) => {
     return (
         <div className={s.profile_content}>
-            <ProfileInfo updateUserStatus={updateUserStatusTC} status={status}  profile={userProfile}/>
+            <ProfileInfo
+                saveUserPhotoTC={saveUserPhotoTC}
+                isOwner={isOwner}
+                updateUserStatus={updateUserStatusTC}
+                status={status}
+                profile={userProfile}/>
             <MyPostsContainer/>
         </div>
     )

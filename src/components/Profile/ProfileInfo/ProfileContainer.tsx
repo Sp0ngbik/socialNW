@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/reduxStore";
 import {
+    saveUserPhotoTC,
     setUserProfileTC,
     setUserStatusTC,
     T_UserProfileBody,
@@ -13,28 +14,29 @@ import {useAppDispatch} from "../../../hooks/hooks";
 import {compose} from "redux";
 
 export type T_ProfileProps = {
-    setUserProfileTC: (userId: string) => void
-    userProfile: T_UserProfileBody | null,
     updateUserStatusTC: (status: string) => void
+    setUserProfileTC: (userId: string) => void
+    saveUserPhotoTC:(file:File)=>void
+    userProfile: T_UserProfileBody | null,
     status: string
     isAuth: boolean
 }
 const ProfileContainer: FC<T_ProfileProps> = (props) => {
-    const params = useParams<{ id: string }>()
-    let userId = params.id
+    const {id} = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
+    const isOwner = !id
 
     useEffect(() => {
-        dispatch(setUserProfileTC(userId))
-        dispatch(setUserStatusTC(userId))
-    }, [userId, dispatch]);
+        dispatch(setUserProfileTC(id))
+        dispatch(setUserStatusTC(id))
+    }, [id, dispatch]);
 
 
-    if (!userId && !props.isAuth) {
+    if (!id && !props.isAuth) {
         return <Navigate to={'/login'}/>
     }
 
-    return <Profile {...props}/>
+    return <Profile isOwner={isOwner} {...props}/>
 }
 
 const mapStateProps = (state: RootState) => {
@@ -48,7 +50,8 @@ const mapStateProps = (state: RootState) => {
 
 const mapDispatchProps = {
     setUserProfileTC,
-    updateUserStatusTC
+    updateUserStatusTC,
+    saveUserPhotoTC
 }
 
 export default compose<React.ComponentType>(

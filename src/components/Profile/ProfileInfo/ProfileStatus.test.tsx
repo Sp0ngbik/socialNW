@@ -1,6 +1,5 @@
 import ProfileStatus from "./ProfileStatus";
 
-export const c = 'c'
 import TestRenderer from 'react-test-renderer'
 
 describe('Profile status component', () => {
