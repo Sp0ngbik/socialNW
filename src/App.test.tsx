@@ -1,4 +1,3 @@
-import React from 'react';
 import MainApp from './App';
 import {createRoot} from "react-dom/client";
 

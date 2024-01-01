@@ -3,7 +3,7 @@ import {T_UserProfileBody} from "../../../redux/reducers/profileReducer";
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import s from '../Profile.module.scss'
-import ProfileContacts from "./ProfileConacts/ProfileContacts";
+import ProfileDescription from "./ProfileConacts/ProfileDescription";
 import ProfileDataForm from "./ProfileConacts/ProfileDataForm";
 
 type T_ProfileInfoProps = {
@@ -29,6 +29,10 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, isOwner, status, updateUs
         }
     }
 
+    const onEditMode = () => {
+        setEditMode(prevState => !prevState)
+    }
+
     return (
         <div className={s.profileInfo}>
             <div>
@@ -38,27 +42,19 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, isOwner, status, updateUs
                         || profile.photos.small
                         || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMx6nyE6BtBUpxyikA6w1afyKRpCc1M38QrA&usqp=CAU'}
                     alt={'ava not found'}/>
+
                 <ProfileStatus updateUserStatus={updateUserStatus} status={status}/>
+                {isOwner && <input type={'file'} onChange={onPhotoSelected}/>}
                 <div>
+
                     <div>
-                        <b> Looking for a job</b> : {profile.lookingForAJob ? 'Yes' : 'No'}
-                    </div>
-                    {profile.lookingForAJob &&
-                        <div><b>My professional skills :</b>{profile.lookingForAJobDescription}</div>}
-                    <div>
-                        <b> About me :</b> {profile.aboutMe}
-                    </div>
-                    <div>
-                        <button onClick={() => setEditMode(!editMode)}>Change</button>
-                        <b> Contacts :</b>
+                        <ProfileDescription profile={profile} changeEditMode={onEditMode}/>
                         {
-                            editMode ?
-                                <ProfileContacts contacts={profile.contacts}/> :
-                                <ProfileDataForm contacts={profile.contacts}/>
+                            editMode &&
+                            <ProfileDataForm profile={profile} changeEditMode={onEditMode}/>
                         }
                     </div>
                 </div>
-                {isOwner && <input type={'file'} onChange={onPhotoSelected}/>}
             </div>
 
         </div>

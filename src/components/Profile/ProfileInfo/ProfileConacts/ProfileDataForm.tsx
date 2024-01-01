@@ -1,38 +1,62 @@
-import {T_UserContacts} from "../../../../redux/reducers/profileReducer";
+import {T_UserProfileBody} from "../../../../redux/reducers/profileReducer";
 import React, {FC} from "react";
 import {useFormik} from "formik";
+import style from './profileData.module.scss'
 
-type T_Props = {
-    contacts: T_UserContacts,
+type Props = {
+    profile: T_UserProfileBody,
+    changeEditMode: () => void
+
 }
 
-const ProfileDataForm: FC<T_Props> = ({contacts}) => {
-    const contactsFields = Object.keys(contacts);
-    const profileDataFormik = useFormik({
+const ProfileDataForm: FC<Props> = ({profile, changeEditMode}) => {
+    const profileInfo = useFormik({
         initialValues: {
-            facebook: '',
-            website: '',
-            vk: '',
-            twitter: '',
-            instagram: '',
-            youtube: '',
-            github: '',
-            mainLink: '',
-        } as T_UserContacts,
+            lookingForAJob: profile.lookingForAJob,
+            lookingForAJobDescription: profile.lookingForAJobDescription,
+            fullName: profile.fullName,
+            userId: profile.userId,
+            aboutMe: profile.aboutMe,
+        },
         onSubmit: (values) => {
             console.log(values)
         }
     })
-    console.log(profileDataFormik.values)
-    return <div>
-        <form onSubmit={profileDataFormik.handleSubmit}>
+    const contactsFields = Object.keys(profile.contacts);
+    const profileContacts = useFormik({
+        initialValues: {...profile.contacts},
+        onSubmit: (values) => {
+            const fullInfo = {...profileInfo.values, contacts: values}
+            console.log(fullInfo)
+        }
+    })
+    return <div className={style.profileEditData}>
+        <form onSubmit={profileInfo.handleSubmit}>
+            Username: <input {...profileInfo.getFieldProps('fullName')}/>
+            <div>
+                Looking for a job? <input type={'checkbox'} {...profileInfo.getFieldProps('lookingForAJob')}
+                                          defaultChecked={profile.lookingForAJob}
+            />
+            </div>
+            {profile.lookingForAJob &&
+                <div><b>My professional skills :</b><input
+                    {...profileInfo.getFieldProps('lookingForAJobDescription')}
+                />
+                </div>}
+            <div>
+                <b> About me :</b> <input  {...profileInfo.getFieldProps('aboutMe')}/>
+            </div>
+        </form>
+        <form onSubmit={profileContacts.handleSubmit}>
+            <b> Contacts :</b>
             {contactsFields.map(el => (
                 <div key={el}>
-                    {contacts[el] &&
-                        <input placeholder={contacts[el]?.toString()} {...profileDataFormik.getFieldProps(el)}/>}
+                    <input
+                        placeholder={el} {...profileContacts.getFieldProps(el)}
+                        value={profile.contacts[el]?.toString()}/>
                 </div>
             ))}
-            <button type={'submit'}>Submit</button>
+            <button onClick={changeEditMode} type={'submit'}>Submit</button>
         </form>
     </div>;
 };
