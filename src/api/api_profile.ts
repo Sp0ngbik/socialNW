@@ -1,4 +1,4 @@
-import {T_UserProfileBody} from "../redux/reducers/profileReducer";
+import {T_UpdateProfile, T_UserProfileBody} from "../redux/reducers/profileReducer";
 import {instanceAxios} from "./axios_instances";
 
 export type T_ProfileResponse = {
@@ -22,6 +22,11 @@ export class Api_profile {
 
     static savePhoto(file: File) {
         return instanceAxios.put('/profile/photo', {image: file}, {headers: {'Content-Type': 'multipart/form-data'}})
+    }
+
+    static updateProfileInfo(profileBody: T_UpdateProfile) {
+        return instanceAxios.put<T_ProfileResponse>('/profile', profileBody)
+
     }
 }
 

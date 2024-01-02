@@ -1,13 +1,81 @@
 .profileEditData {
   position: absolute;
-  background-color: #e6cbcb;
+  background-color: rgb(197, 125, 161);
   transform: translate(-50%, -50%);
   top: 50%;
   left: 58%;
-  height: 500px;
-  width: 500px;
+  height: auto;
+  width: 800px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.userInformation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & div {
+    font-size: 20px;
+    margin: 20px 0 0;
+  }
+
+  & textarea:first-child {
+    height: 30px;
+  }
+
+  & textarea {
+    resize: none;
+    text-align: center;
+    width: 300px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    font-size: 16px;
+  }
+
+  & input {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.userContacts {
+  display: flex;
+  flex-direction: column;
+
+  & .contactElement {
+    & div {
+      font-size: 17px;
+      color: red;
+    }
+  }
+
+  & input {
+    width: 225px;
+    height: 25px;
+    font-size: 15px;
+    margin: 5px 0 0;
+    border-radius: 10px;
+    border: none;
+    padding: 3px 5px;
+  }
+
+  & button {
+    width: 90px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    margin: 20px auto;
+    transition: 0.3s linear;
+
+    &:hover {
+      background-color: #dfb46e;
+      cursor: pointer;
+    }
+  }
 }

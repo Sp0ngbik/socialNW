@@ -1,4 +1,4 @@
-import {AppDispatch, AppThunk} from "../reduxStore";
+import {AppThunk} from "../reduxStore";
 import {Api_profile} from "../../api/api_profile";
 import {toggleLoader} from "./usersReducer";
 
@@ -30,6 +30,9 @@ export type T_UserProfileBody = {
         large: string | null
     }
 }
+
+export type T_UpdateProfile = Omit<T_UserProfileBody, 'photos'>
+
 export type T_ProfileReducer = {
     profile: T_UserProfileBody | null,
     userId: number | null,
@@ -37,11 +40,12 @@ export type T_ProfileReducer = {
     status: string | null
 }
 
-type T_AddPostAC = ReturnType<typeof addPostAC>
-type T_SetProfileBody = ReturnType<typeof setUserProfile>
-type T_SetUserStatus = ReturnType<typeof setUserStatus>
-type T_SavePhoto = ReturnType<typeof savePhotoAC>
-type T_MainProfile = T_AddPostAC | T_SetProfileBody | T_SetUserStatus | T_SavePhoto
+type AddPostAC = ReturnType<typeof addPostAC>
+type SetProfileBody = ReturnType<typeof setUserProfile>
+type SetUserStatus = ReturnType<typeof setUserStatus>
+type UpdateProfile = ReturnType<typeof updateProfileAC>
+type SavePhoto = ReturnType<typeof savePhotoAC>
+type MainProfile = AddPostAC | SetProfileBody | SetUserStatus | UpdateProfile | SavePhoto
 
 
 let initialState: T_ProfileReducer = {
@@ -51,10 +55,11 @@ let initialState: T_ProfileReducer = {
         {id: 1, message: 'Hello,fellow', likesCount: 3},
         {id: 2, message: 'Welcome bro', likesCount: 5},
     ],
-    status: null
+    status: null,
+
 }
 
-export const profileReducer = (state = initialState, action: T_MainProfile): T_ProfileReducer => {
+export const profileReducer = (state = initialState, action: MainProfile): T_ProfileReducer => {
     switch (action.type) {
         case "profile/ADD_POST":
             console.log(state.profile)
@@ -82,6 +87,9 @@ export const profileReducer = (state = initialState, action: T_MainProfile): T_P
                     }
                 } : {...state}
         }
+        case "profile/UPDATE_PROFILE": {
+            return state.profile ? {...state, profile: {...state.profile, ...action.userBody}} : {...state}
+        }
         default:
             return state
     }
@@ -99,7 +107,13 @@ export const setUserStatus = (status: string) => {
 export const savePhotoAC = (fileResponse: any) => {
     return {type: 'profile/SAVE_PHOTO', fileResponse} as const
 }
-export const setUserProfileTC = (userId: string = '30114'): AppThunk => async (dispatch: AppDispatch) => {
+
+export const updateProfileAC = (userBody: T_UpdateProfile) => {
+    return {type: 'profile/UPDATE_PROFILE', userBody} as const
+}
+
+
+export const setUserProfileTC = (userId: string = '30114'): AppThunk => async (dispatch) => {
     dispatch(toggleLoader(true))
     try {
         const res = await Api_profile.getUser(userId)
@@ -109,7 +123,7 @@ export const setUserProfileTC = (userId: string = '30114'): AppThunk => async (d
     }
     dispatch(toggleLoader(false));
 }
-export const setUserStatusTC = (userId: string = '30114'): AppThunk => async (dispatch: AppDispatch) => {
+export const setUserStatusTC = (userId: string = '30114'): AppThunk => async (dispatch) => {
     try {
         const res = await Api_profile.getStatus(userId)
         dispatch(setUserStatus(res.data))
@@ -118,7 +132,7 @@ export const setUserStatusTC = (userId: string = '30114'): AppThunk => async (di
     }
 }
 
-export const updateUserStatusTC = (status: string) => async (dispatch: AppDispatch) => {
+export const updateUserStatusTC = (status: string): AppThunk => async (dispatch) => {
     try {
         const res = await Api_profile.updateStatus(status)
         if (res.data.resultCode === 0) {
@@ -127,9 +141,8 @@ export const updateUserStatusTC = (status: string) => async (dispatch: AppDispat
     } catch (e) {
         console.log(e)
     }
-
 }
-export const saveUserPhotoTC = (file: File) => async (dispatch: AppDispatch) => {
+export const saveUserPhotoTC = (file: File): AppThunk => async (dispatch) => {
     try {
         const res = await Api_profile.savePhoto(file)
         if (res.data.resultCode === 0) {
@@ -138,5 +151,17 @@ export const saveUserPhotoTC = (file: File) => async (dispatch: AppDispatch) => 
     } catch (e) {
         console.log(e)
     }
+}
 
+export const updateProfileInfoTC = (profileBody: T_UpdateProfile): AppThunk => async (dispatch) => {
+    try {
+        const res = await Api_profile.updateProfileInfo(profileBody)
+        if (res.data.resultCode === 0) {
+            dispatch(updateProfileAC(profileBody))
+        } else {
+            return res
+        }
+    } catch (e) {
+        console.log(e)
+    }
 }

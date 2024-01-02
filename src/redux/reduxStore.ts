@@ -16,8 +16,6 @@ let rootReducer = combineReducers({
     authReducer: auth_reducer,
     appReducer: app_Reducer,
 })
-//https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
-//yarn add @redux-devtools/extension
 
 export const reduxStore = legacy_createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 

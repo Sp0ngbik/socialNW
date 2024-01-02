@@ -8,10 +8,11 @@ type T_Props = {
     isOwner: boolean
 }
 
-const Profile: FC<T_ProfileProps & T_Props> = ({userProfile, saveUserPhotoTC, isOwner, status, updateUserStatusTC}) => {
+const Profile: FC<T_ProfileProps & T_Props> = ({userProfile,updateProfileInfoTC, saveUserPhotoTC, isOwner, status, updateUserStatusTC}) => {
     return (
         <div className={s.profile_content}>
             <ProfileInfo
+                updateProfile = {updateProfileInfoTC}
                 saveUserPhotoTC={saveUserPhotoTC}
                 isOwner={isOwner}
                 updateUserStatus={updateUserStatusTC}

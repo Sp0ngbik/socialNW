@@ -1,21 +1,24 @@
 import React, {ChangeEvent, FC, useState} from 'react';
-import {T_UserProfileBody} from "../../../redux/reducers/profileReducer";
+import {T_UpdateProfile, T_UserProfileBody} from "../../../redux/reducers/profileReducer";
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import s from '../Profile.module.scss'
 import ProfileDescription from "./ProfileConacts/ProfileDescription";
 import ProfileDataForm from "./ProfileConacts/ProfileDataForm";
+import {AxiosResponse} from "axios";
+import {T_ProfileResponse} from "../../../api/api_profile";
 
 type T_ProfileInfoProps = {
     updateUserStatus: (status: string) => void
     saveUserPhotoTC: (file: File) => void
+    updateProfile: (userBody: T_UpdateProfile) => Promise<AxiosResponse<T_ProfileResponse>>
     profile: T_UserProfileBody | null
     status: string
     isOwner: boolean
 }
 
 
-const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, isOwner, status, updateUserStatus, saveUserPhotoTC}) => {
+const ProfileInfo: FC<T_ProfileInfoProps> = ({profile,updateProfile, isOwner, status, updateUserStatus, saveUserPhotoTC}) => {
 
     const [editMode, setEditMode] = useState(false)
 
@@ -51,7 +54,7 @@ const ProfileInfo: FC<T_ProfileInfoProps> = ({profile, isOwner, status, updateUs
                         <ProfileDescription profile={profile} changeEditMode={onEditMode}/>
                         {
                             editMode &&
-                            <ProfileDataForm profile={profile} changeEditMode={onEditMode}/>
+                            <ProfileDataForm updateProfile={updateProfile} profile={profile} changeEditMode={onEditMode}/>
                         }
                     </div>
                 </div>

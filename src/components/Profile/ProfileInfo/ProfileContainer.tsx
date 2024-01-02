@@ -4,32 +4,36 @@ import {
     saveUserPhotoTC,
     setUserProfileTC,
     setUserStatusTC,
+    T_UpdateProfile,
     T_UserProfileBody,
+    updateProfileInfoTC,
     updateUserStatusTC
 } from "../../../redux/reducers/profileReducer";
 import React, {FC, useEffect} from "react";
 import Profile from "../Profile";
 import {Navigate, useParams} from "react-router-dom";
-import {useAppDispatch} from "../../../hooks/hooks";
 import {compose} from "redux";
+import {AxiosResponse} from "axios";
+import {T_ProfileResponse} from "../../../api/api_profile";
 
 export type T_ProfileProps = {
     updateUserStatusTC: (status: string) => void
-    setUserProfileTC: (userId: string) => void
-    saveUserPhotoTC:(file:File)=>void
+    setUserProfileTC: (userId?: string) => void
+    setUserStatusTC: (userId?: string) => void
+    saveUserPhotoTC: (file: File) => void
+    updateProfileInfoTC: (userBody: T_UpdateProfile) => Promise<AxiosResponse<T_ProfileResponse>>
     userProfile: T_UserProfileBody | null,
     status: string
     isAuth: boolean
 }
 const ProfileContainer: FC<T_ProfileProps> = (props) => {
     const {id} = useParams<{ id: string }>()
-    const dispatch = useAppDispatch()
+    const {setUserProfileTC, setUserStatusTC} = props
     const isOwner = !id
-
     useEffect(() => {
-        dispatch(setUserProfileTC(id))
-        dispatch(setUserStatusTC(id))
-    }, [id, dispatch]);
+        setUserProfileTC(id)
+        setUserStatusTC(id)
+    }, [setUserProfileTC, setUserStatusTC, id]);
 
 
     if (!id && !props.isAuth) {
@@ -51,7 +55,9 @@ const mapStateProps = (state: RootState) => {
 const mapDispatchProps = {
     setUserProfileTC,
     updateUserStatusTC,
-    saveUserPhotoTC
+    saveUserPhotoTC,
+    updateProfileInfoTC,
+    setUserStatusTC
 }
 
 export default compose<React.ComponentType>(
