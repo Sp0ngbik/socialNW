@@ -6,17 +6,19 @@ import {T_LoginProps} from "./Login";
 export type T_LoginForm = {
     email: string,
     password: string,
-    rememberMe: boolean
+    rememberMe: boolean,
+    captcha: string | null
 }
 
 
-const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth, loginError}) => {
+const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth, captcha}) => {
     const formikLogin = useFormik({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false,
-            mainField: ''
+            mainField: '',
+            captcha: null
         },
         validate: (values) => {
             if (!values.email) {
@@ -62,6 +64,12 @@ const LoginForm: React.FC<T_LoginProps> = ({setLoginUserTC, isAuth, loginError})
                 />Remember me
             </div>
             {formikLogin.errors.mainField && <div>{formikLogin.errors.mainField}</div>}
+            {captcha &&
+                <div><img src={captcha} alt={'captcha not found'}/>
+                    <div>
+                        <input placeholder={'captcha'} {...formikLogin.getFieldProps('captcha')}/>
+                    </div>
+                </div>}
             <div>
                 <button type='submit'>Send</button>
             </div>

@@ -9,7 +9,7 @@ import {T_ResponseLogin} from "../../api/api_header";
 export type T_LoginProps = {
     setLoginUserTC: (data: T_LoginForm) => Promise<AxiosResponse<T_ResponseLogin>>
     isAuth: boolean,
-    loginError: string
+    captcha: null | string
 }
 
 const Login: React.FC<T_LoginProps> = (props) => {
@@ -23,7 +23,7 @@ const Login: React.FC<T_LoginProps> = (props) => {
 const mapStateToProps = (state: RootState) => {
     return {
         isAuth: state.authReducer.isAuth,
-        loginError: state.authReducer.loginError
+        captcha: state.authReducer.captcha,
     }
 }
 export default connect(mapStateToProps, {setLoginUserTC})(Login);
